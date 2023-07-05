@@ -62,34 +62,36 @@ extern int yydebug;
     STRING = 263,                  /* STRING  */
     VOID = 264,                    /* VOID  */
     TYPE = 265,                    /* TYPE  */
-    NULO = 266,                    /* NULO  */
-    CONSTANT = 267,                /* CONSTANT  */
-    MAIN = 268,                    /* MAIN  */
-    FUNCTION = 269,                /* FUNCTION  */
-    FOR = 270,                     /* FOR  */
-    WHILE = 271,                   /* WHILE  */
-    IF = 272,                      /* IF  */
-    ELSE_IF = 273,                 /* ELSE_IF  */
-    ELSE = 274,                    /* ELSE  */
-    SWITCH = 275,                  /* SWITCH  */
-    CASE = 276,                    /* CASE  */
-    DEFAULT = 277,                 /* DEFAULT  */
-    BREAK = 278,                   /* BREAK  */
-    RETURN = 279,                  /* RETURN  */
-    PLUS_ASSIGN = 280,             /* PLUS_ASSIGN  */
-    MINUS_ASSIGN = 281,            /* MINUS_ASSIGN  */
-    DIV_ASSIGN = 282,              /* DIV_ASSIGN  */
-    TIMES_ASSIGN = 283,            /* TIMES_ASSIGN  */
-    DOUBLE_PLUS = 284,             /* DOUBLE_PLUS  */
-    DOUBLE_MINUS = 285,            /* DOUBLE_MINUS  */
-    POWER = 286,                   /* POWER  */
-    AND = 287,                     /* AND  */
-    OR = 288,                      /* OR  */
-    EOR = 289,                     /* EOR  */
-    EQUAL = 290,                   /* EQUAL  */
-    NOT_EQUAL = 291,               /* NOT_EQUAL  */
-    EQ_GREATER = 292,              /* EQ_GREATER  */
-    EQ_SMALLER = 293               /* EQ_SMALLER  */
+    PRINT = 266,                   /* PRINT  */
+    READ = 267,                    /* READ  */
+    NULO = 268,                    /* NULO  */
+    CONSTANT = 269,                /* CONSTANT  */
+    MAIN_FUN = 270,                /* MAIN_FUN  */
+    FUNCTION = 271,                /* FUNCTION  */
+    FOR = 272,                     /* FOR  */
+    WHILE = 273,                   /* WHILE  */
+    IF = 274,                      /* IF  */
+    ELSE_IF = 275,                 /* ELSE_IF  */
+    ELSE = 276,                    /* ELSE  */
+    SWITCH = 277,                  /* SWITCH  */
+    CASE = 278,                    /* CASE  */
+    DEFAULT = 279,                 /* DEFAULT  */
+    BREAK = 280,                   /* BREAK  */
+    RETURN = 281,                  /* RETURN  */
+    PLUS_ASSIGN = 282,             /* PLUS_ASSIGN  */
+    MINUS_ASSIGN = 283,            /* MINUS_ASSIGN  */
+    DIV_ASSIGN = 284,              /* DIV_ASSIGN  */
+    TIMES_ASSIGN = 285,            /* TIMES_ASSIGN  */
+    DOUBLE_PLUS = 286,             /* DOUBLE_PLUS  */
+    DOUBLE_MINUS = 287,            /* DOUBLE_MINUS  */
+    POWER = 288,                   /* POWER  */
+    AND = 289,                     /* AND  */
+    OR = 290,                      /* OR  */
+    EOR = 291,                     /* EOR  */
+    EQUAL = 292,                   /* EQUAL  */
+    NOT_EQUAL = 293,               /* NOT_EQUAL  */
+    EQ_GREATER = 294,              /* EQ_GREATER  */
+    EQ_SMALLER = 295               /* EQ_SMALLER  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -106,45 +108,47 @@ extern int yydebug;
 #define STRING 263
 #define VOID 264
 #define TYPE 265
-#define NULO 266
-#define CONSTANT 267
-#define MAIN 268
-#define FUNCTION 269
-#define FOR 270
-#define WHILE 271
-#define IF 272
-#define ELSE_IF 273
-#define ELSE 274
-#define SWITCH 275
-#define CASE 276
-#define DEFAULT 277
-#define BREAK 278
-#define RETURN 279
-#define PLUS_ASSIGN 280
-#define MINUS_ASSIGN 281
-#define DIV_ASSIGN 282
-#define TIMES_ASSIGN 283
-#define DOUBLE_PLUS 284
-#define DOUBLE_MINUS 285
-#define POWER 286
-#define AND 287
-#define OR 288
-#define EOR 289
-#define EQUAL 290
-#define NOT_EQUAL 291
-#define EQ_GREATER 292
-#define EQ_SMALLER 293
+#define PRINT 266
+#define READ 267
+#define NULO 268
+#define CONSTANT 269
+#define MAIN_FUN 270
+#define FUNCTION 271
+#define FOR 272
+#define WHILE 273
+#define IF 274
+#define ELSE_IF 275
+#define ELSE 276
+#define SWITCH 277
+#define CASE 278
+#define DEFAULT 279
+#define BREAK 280
+#define RETURN 281
+#define PLUS_ASSIGN 282
+#define MINUS_ASSIGN 283
+#define DIV_ASSIGN 284
+#define TIMES_ASSIGN 285
+#define DOUBLE_PLUS 286
+#define DOUBLE_MINUS 287
+#define POWER 288
+#define AND 289
+#define OR 290
+#define EOR 291
+#define EQUAL 292
+#define NOT_EQUAL 293
+#define EQ_GREATER 294
+#define EQ_SMALLER 295
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 44 "parser.y"
+#line 45 "parser.y"
 
 	char * sValue; 
 	struct record * rec;
 
-#line 148 "y.tab.h"
+#line 152 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

@@ -28,10 +28,11 @@ REGRAS PRA LER E IMPRIMIR
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include "./record.h"
+#include "record.h"
 
 int yylex(void);
 int yyerror(char *s);
+int yywrap();
 extern int yylineno;
 extern char * yytext;
 extern FILE * yyin, * yyout;
@@ -48,8 +49,9 @@ char * convert(char * type);
 
 %token <sValue> ID
 %token <sValue> INT REAL BOOLEAN CHAR STRING VOID TYPE
+%token <sValue> PRINT READ
 %token NULO CONSTANT
-%token MAIN FUNCTION
+%token MAIN_FUN FUNCTION
 %token FOR WHILE IF ELSE_IF ELSE SWITCH CASE DEFAULT BREAK RETURN
 %token PLUS_ASSIGN MINUS_ASSIGN DIV_ASSIGN TIMES_ASSIGN DOUBLE_PLUS DOUBLE_MINUS
 %token POWER
@@ -59,6 +61,7 @@ char * convert(char * type);
 %type <rec> expression expression_operator term term_operator factor base id_value literal double_sign function_call arguments arguments_list argument
 %type <rec> subprograms_section subprogram subprogram_type subprogram_id signature parameters parameter_list parameter statement_list statement return
 %type <rec> block body header
+%type <rec> print read
 %type <rec> assignment assignment_operation assignment_sign
 %type <rec> conditional if_else if else_section else_if else switch_case switch case_section case default_section default
 %type <rec> loop while for for_structure for_expression for_assignment
@@ -130,9 +133,7 @@ dimensions :  																	{$$ = createRecord("","");}
 		   | dimensions_value  													{$$ = $1;}
 		   ;
 
-dimensions_novalue : '[' ']'  													{char * s = "[]";
-																				$$ = createRecord(s, "");
-																				free(s);}
+dimensions_novalue : '[' ']'  													{$$ = createRecord("[]", "");}
 		   		   | '[' ']' dimensions_novalue 								{char * s = cat("[]", $3->code, "", "", "");
 																				freeRecord($3);
 																				$$ = createRecord(s, "");}
@@ -158,12 +159,8 @@ expression : expression expression_operator term 								{char * s = cat($1->cod
 		   | term 																{$$ = $1;}
 		   ;
 
-expression_operator : '+'  														{char * s = "+";
-																				$$ = createRecord(s, "");
-																				free(s);}
-	 				| '-' 														{char * s = "-";
-																				$$ = createRecord(s, "");
-																				free(s);}
+expression_operator : '+'  														{$$ = createRecord("+", "");}
+	 				| '-' 														{$$ = createRecord("-", "");}
 	  				;
 
 //Recursão à esquerda permitida
@@ -177,15 +174,9 @@ term : term term_operator factor 												{char * s = cat($1->code, $2->code,
 	 | factor 																	{$$ = $1;}
 	 ;
 
-term_operator : '*'  															{char * s = "*";
-																				$$ = createRecord(s, "");
-																				free(s);}
-	   		  | '/'  															{char * s = "/";
-																				$$ = createRecord(s, "");
-																				free(s);}
-	   		  | '%'																{char * s = "%";
-																				$$ = createRecord(s, "");
-																				free(s);}
+term_operator : '*'  															{$$ = createRecord("*", "");}
+	   		  | '/'  															{$$ = createRecord("/", "");}
+	   		  | '%'																{$$ = createRecord("%", "");}
 	   		  ;
 
 //Verificação de tipos
@@ -250,12 +241,8 @@ argument : id_declaration														{$$ = $1;}
 		 | function_call														{$$ = $1;}
 		 ;
 
-double_sign : DOUBLE_PLUS 														{char * s = "++";
-																				$$ = createRecord(s, "");
-																				free(s);}
-			| DOUBLE_MINUS 														{char * s = "--";
-																				$$ = createRecord(s, "");
-																				free(s);}
+double_sign : DOUBLE_PLUS 														{$$ = createRecord("++", "");}
+			| DOUBLE_MINUS 														{$$ = createRecord("--", "");}
 			;
 
 subprograms_section : subprogram 												{$$ = $1;}
@@ -289,16 +276,12 @@ signature : subprogram_type subprogram_id '(' parameters ')'					{char * s = cat
 
 subprogram_type : TYPE 															{$$ = createRecord(convert($1), "");
 																				free($1);}
-		  		| VOID 															{char * s = "void";
-																				$$ = createRecord(s, "");
-																				free(s);}
+		  		| VOID 															{$$ = createRecord("void", "");}
 		  		;
 
 subprogram_id : ID																{$$ = createRecord($1, "");
 																				free($1);}
-			  | MAIN															{char * s = "main";
-																				$$ = createRecord(s, "");
-																				free(s);}
+			  | MAIN_FUN														{$$ = createRecord("main", "");}
 			  ;
 
 parameters : 																	{$$ = createRecord("","");}
@@ -348,12 +331,12 @@ statement_list : statement ';'													{char * s = cat($1->code, ";\n", "", 
 		       ;
 
 statement : assignment 															{$$ = $1;}
+		  | print 																{$$ = $1;}
+		  | read																{$$ = $1;}
 	 	  | conditional 														{$$ = $1;}
 	 	  | loop 																{$$ = $1;}
 	 	  | return																{$$ = $1;}
-	 	  | BREAK																{char * s = "break";
-																				$$ = createRecord(s, "");
-																				free(s);}
+	 	  | BREAK																{$$ = createRecord("break", "");}
 	 	  ;
 
 assignment : id assignment_operation											{char * s = cat($1->code, $2->code, "", "", "");
@@ -371,21 +354,11 @@ assignment_operation : assignment_sign expression 								{char * s = cat($1->co
 		   			 | double_sign 												{$$ = $1;}
 		   			 ;
 
-assignment_sign : '=' 															{char * s = "=";
-																				$$ = createRecord(s, "");
-																				free(s);}
-				| PLUS_ASSIGN 													{char * s = "+=";
-																				$$ = createRecord(s, "");
-																				free(s);}
-				| MINUS_ASSIGN 													{char * s = "-=";
-																				$$ = createRecord(s, "");
-																				free(s);}
-				| DIV_ASSIGN 													{char * s = "/=";
-																				$$ = createRecord(s, "");
-																				free(s);}
-				| TIMES_ASSIGN 													{char * s = "*=";
-																				$$ = createRecord(s, "");
-																				free(s);}
+assignment_sign : '=' 															{$$ = createRecord("=", "");}
+				| PLUS_ASSIGN 													{$$ = createRecord("+=", "");}
+				| MINUS_ASSIGN 													{$$ = createRecord("-=", "");}
+				| DIV_ASSIGN 													{$$ = createRecord("/=", "");}
+				| TIMES_ASSIGN 													{$$ = createRecord("*=", "");}
 				;
 
 evaluation : comparation 														{$$ = $1;}
@@ -419,36 +392,24 @@ compare : id evaluation_operator expression 									{char * s = cat($1->code, $
 																				free(s);}
 		;
 
-evaluation_operator : EQUAL 													{char * s = "==";
-																				$$ = createRecord(s, "");
-																				free(s);}
-				    | NOT_EQUAL 												{char * s = "!=";
-																				$$ = createRecord(s, "");
-																				free(s);}
-				    | '>' 														{char * s = ">";
-																				$$ = createRecord(s, "");
-																				free(s);}
-				    | '<'														{char * s = "<";
-																				$$ = createRecord(s, "");
-																				free(s);}
-				    | EQ_GREATER 												{char * s = ">=";
-																				$$ = createRecord(s, "");
-																				free(s);}
-				    | EQ_SMALLER 												{char * s = "<=";
-																				$$ = createRecord(s, "");
-																				free(s);}
+evaluation_operator : EQUAL 													{$$ = createRecord("==", "");}
+				    | NOT_EQUAL 												{$$ = createRecord("!=", "");}
+				    | '>' 														{$$ = createRecord(">", "");}
+				    | '<'														{$$ = createRecord("<", "");}
+				    | EQ_GREATER 												{$$ = createRecord(">=", "");}
+				    | EQ_SMALLER 												{$$ = createRecord("<=", "");}
 				    ;
 
-logic_operator : AND 															{char * s = "&&";
-																				$$ = createRecord(s, "");
-																				free(s);}
-			   | OR 															{char * s = "||";
-																				$$ = createRecord(s, "");
-																				free(s);}
-			   | EOR 															{char * s = "^";
-																				$$ = createRecord(s, "");
-																				free(s);}
+logic_operator : AND 															{$$ = createRecord("&&", "");}
+			   | OR 															{$$ = createRecord("||", "");}
+			   | EOR 															{$$ = createRecord("^", "");}
 			   ;
+
+print : PRINT '(' STRING ')'													{}
+	  ;
+
+read : READ '(' ID ')'															{}
+	 ;
 
 conditional : if_else															{$$ = $1;}
 			| switch_case														{$$ = $1;}
@@ -583,24 +544,6 @@ return : RETURN expression 														{char * s = cat("return ", $2->code, ""
 
 %%
 
-int main(int argc, char ** argv){
-	int codigo;
-
-	if (argc != 3) {
-       printf("Usage: $./compiler input.txt output.txt\nClosing application...\n");
-       exit(0);
-    }
-    
-    yyin = fopen(argv[1], "r");
-    yyout = fopen(argv[2], "w");
-
-    codigo = yyparse();
-
-    fclose(yyin);
-    fclose(yyout);
-
-	return codigo;
-}
 
 int yyerror (char *msg) {
 	fprintf (stderr, "%d: %s at '%s'\n", yylineno, msg, yytext);

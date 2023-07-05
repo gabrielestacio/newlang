@@ -17,7 +17,7 @@
 ("int"|"char"|"string"|"real"|"boolean")	 {yylval.sValue = strdup(yytext); return TYPE;}
 "null"                                     {return NULO;}
 "const"                                    {return CONSTANT;}
-"main"                                     {return MAIN;}
+"main"                                     {return MAIN_FUN;}
 "for"                             			   {return FOR;}
 "while"      			                         {return WHILE;}
 "if"                                       {return IF;}
@@ -29,6 +29,8 @@
 "break"                                    {return BREAK;}
 "return"                                   {return RETURN;}
 ("fun"|"function")                         {return FUNCTION;}
+"print"                                    {yylval.sValue = strdup(yytext); return PRINT;}
+"read"                                    {yylval.sValue = strdup(yytext); return READ;}
 "{"                                        {return yytext[0];}
 "}"                                        {return yytext[0];}
 "("                                        {return yytext[0];}
