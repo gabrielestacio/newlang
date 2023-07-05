@@ -1,0 +1,5 @@
+#!/bin/bash
+
+lex lexer.l
+yacc parser.y -d -v -g
+gcc lex.yy.c y.tab.c record.c -o parser.exe 
