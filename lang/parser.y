@@ -28,7 +28,7 @@ REGRAS PRA LER E IMPRIMIR
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include "./record.h"
+#include "record.h"
 
 int yylex(void);
 int yyerror(char *s);
@@ -405,10 +405,16 @@ logic_operator : AND 															{$$ = createRecord("&&", "");}
 			   | EOR 															{$$ = createRecord("^", "");}
 			   ;
 
-print : PRINT '(' STRING ')'													{}
+//Não tá funcionando
+print : PRINT '(' expression ')'												{char * s = cat("printf(", $3->code, ")", "", "");
+																				free($3);
+																				$$ = createRecord(s, "");
+																				free(s);}
 	  ;
 
-read : READ '(' ID ')'															{}
+//Tem que ver a questão dos tipos
+read : READ '(' ID ')'															{/*char * s = cat("scanf()");*/}
+	 | READ '(' ')'																{}
 	 ;
 
 conditional : if_else															{$$ = $1;}
