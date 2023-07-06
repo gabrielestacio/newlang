@@ -2,4 +2,4 @@
 
 lex lexer.l
 yacc parser.y -d -v -g
-gcc lex.yy.c y.tab.c record.c -o parser.exe 
+gcc lex.yy.c y.tab.c record.c hash_table.c -o parser.exe 

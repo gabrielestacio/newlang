@@ -1,7 +1,7 @@
 all: compilador
 
 compilador: lex.yy.c y.tab.c 
-	gcc lex.yy.c y.tab.c record.c -o parser.exe
+	gcc lex.yy.c y.tab.c record.c hash_table.c -o parser.exe
 
 lex.yy.c: lexer.l
 	lex lexer.l
