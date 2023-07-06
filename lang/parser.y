@@ -28,7 +28,7 @@ REGRAS PRA LER E IMPRIMIR
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include "record.h"
+#include "./record.h"
 
 int yylex(void);
 int yyerror(char *s);
