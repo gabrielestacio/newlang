@@ -1,0 +1,27 @@
+fun int mdc(int n, int m, int* r) {
+    if (m%n == 0) {
+        *r = m;
+        return;
+    }else if (n%m == 0) {
+        *r = n;
+        return;
+    }else if (n <= m) {
+        return mdc(n, m % n, r);
+    }else{
+        return mdc(m, n % m, r);
+    }
+    
+}
+function main(){
+    int n = 0;
+    int m = 0;
+    int r = 1;
+    print("Digite o valor de n: ");
+    read(n);
+    print("Digite o valor de m: ");
+    read(m);
+
+    mdc(n, m, &r);
+
+    print("O maior divisor comum entre " + n + "e " + m + "é " + r + "\n");
+}
