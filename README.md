@@ -6,20 +6,21 @@ Essa linguagem foi implementada como projeto da disciplina "Engenharia de Lingua
 No terminal, com as ferramentas Lex e Yacc instaladas, dentro da pasta ***lang***, rode os comandos:
 
 ```c
-$ flex lexer.l 
+$ lex lexer.l 
 $ yacc parser.y -d -v -g
-$ gcc lex.yy.c parser.tab.c -o parser.exe
+$ gcc lex.yy.c y.tab.c record.c hash_table.c -o parser.exe
 ```
 
 Tambem existe a possibilidade de usar esses comandos via make, rodando o comando:
 ```c
-$ make build
+$ make clean
+$ make
 ```
 
 ## Como usar o compilador
-Com o executável do compilador passe a opção de --help e verá todas as opções disponíveis
+Com o executável do compilador, rode o seguinte comando seguido do programa desejado.
 ```c
-$ ./parser.exe --help
+$ ./parser.exe exemplo.txt //vai rodar o arquivo exemplo.txt
 ```
 
 ## Tipos
