@@ -10,7 +10,7 @@ fun int mdc(int n, int m, int* r) {
     }else{
         return mdc(m, n % m, r);
     }
-    
+
 }
 function main(){
     int n = 0;
@@ -23,5 +23,5 @@ function main(){
 
     mdc(n, m, &r);
 
-    print("O maior divisor comum entre " + n + "e " + m + "é " + r + "\n");
+    print("O maior divisor comum entre ", n, "e ", m, "é ", r, "\n");
 }
