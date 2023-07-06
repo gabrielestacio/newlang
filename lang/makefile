@@ -1,7 +1,7 @@
 all: compilador
 
 compilador: lex.yy.c y.tab.c 
-	gcc lex.yy.c y.tab.c record.c -o compiler
+	gcc lex.yy.c y.tab.c record.c -o parser.exe
 
 lex.yy.c: lexer.l
 	lex lexer.l
@@ -10,4 +10,4 @@ y.tab.c: parser.y
 	yacc parser.y -d -v -g
 
 clean:
-	rm -rf lex.yy.c y.tab.* compiler output.txt y.output
+	rm -rf lex.yy.c y.tab.* parser.exe y.output

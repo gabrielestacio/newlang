@@ -375,26 +375,27 @@ enum yysymbol_kind_t
   YYSYMBOL_evaluation_operator = 103,      /* evaluation_operator  */
   YYSYMBOL_logic_operator = 104,           /* logic_operator  */
   YYSYMBOL_print = 105,                    /* print  */
-  YYSYMBOL_read = 106,                     /* read  */
-  YYSYMBOL_conditional = 107,              /* conditional  */
-  YYSYMBOL_if_else = 108,                  /* if_else  */
-  YYSYMBOL_if = 109,                       /* if  */
-  YYSYMBOL_else_section = 110,             /* else_section  */
-  YYSYMBOL_else_if = 111,                  /* else_if  */
-  YYSYMBOL_else = 112,                     /* else  */
-  YYSYMBOL_switch_case = 113,              /* switch_case  */
-  YYSYMBOL_switch = 114,                   /* switch  */
-  YYSYMBOL_case_section = 115,             /* case_section  */
-  YYSYMBOL_case = 116,                     /* case  */
-  YYSYMBOL_default_section = 117,          /* default_section  */
-  YYSYMBOL_default = 118,                  /* default  */
-  YYSYMBOL_loop = 119,                     /* loop  */
-  YYSYMBOL_while = 120,                    /* while  */
-  YYSYMBOL_for = 121,                      /* for  */
-  YYSYMBOL_for_structure = 122,            /* for_structure  */
-  YYSYMBOL_for_expression = 123,           /* for_expression  */
-  YYSYMBOL_for_assignment = 124,           /* for_assignment  */
-  YYSYMBOL_return = 125                    /* return  */
+  YYSYMBOL_print_content = 106,            /* print_content  */
+  YYSYMBOL_read = 107,                     /* read  */
+  YYSYMBOL_conditional = 108,              /* conditional  */
+  YYSYMBOL_if_else = 109,                  /* if_else  */
+  YYSYMBOL_if = 110,                       /* if  */
+  YYSYMBOL_else_section = 111,             /* else_section  */
+  YYSYMBOL_else_if = 112,                  /* else_if  */
+  YYSYMBOL_else = 113,                     /* else  */
+  YYSYMBOL_switch_case = 114,              /* switch_case  */
+  YYSYMBOL_switch = 115,                   /* switch  */
+  YYSYMBOL_case_section = 116,             /* case_section  */
+  YYSYMBOL_case = 117,                     /* case  */
+  YYSYMBOL_default_section = 118,          /* default_section  */
+  YYSYMBOL_default = 119,                  /* default  */
+  YYSYMBOL_loop = 120,                     /* loop  */
+  YYSYMBOL_while = 121,                    /* while  */
+  YYSYMBOL_for = 122,                      /* for  */
+  YYSYMBOL_for_structure = 123,            /* for_structure  */
+  YYSYMBOL_for_expression = 124,           /* for_expression  */
+  YYSYMBOL_for_assignment = 125,           /* for_assignment  */
+  YYSYMBOL_return = 126                    /* return  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -722,16 +723,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  12
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   207
+#define YYLAST   217
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  59
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  67
+#define YYNNTS  68
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  133
+#define YYNRULES  135
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  213
+#define YYNSTATES  216
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   295
@@ -794,10 +795,10 @@ static const yytype_int16 yyrline[] =
      314,   319,   322,   326,   333,   334,   335,   336,   337,   338,
      339,   342,   349,   354,   357,   358,   359,   360,   361,   364,
      365,   373,   374,   380,   384,   387,   395,   396,   397,   398,
-     399,   400,   403,   404,   405,   409,   416,   417,   420,   421,
-     424,   431,   438,   439,   444,   447,   454,   460,   468,   474,
-     475,   482,   489,   490,   493,   499,   500,   503,   510,   517,
-     523,   532,   537,   545
+     399,   400,   403,   404,   405,   409,   415,   416,   424,   425,
+     428,   429,   432,   439,   446,   447,   452,   455,   462,   468,
+     476,   482,   483,   490,   497,   498,   501,   507,   508,   511,
+     518,   525,   531,   540,   545,   553
 };
 #endif
 
@@ -831,11 +832,11 @@ static const char *const yytname[] =
   "parameter_list", "parameter", "block", "body", "statement_list",
   "statement", "assignment", "assignment_operation", "assignment_sign",
   "evaluation", "comparation", "comparison", "compare",
-  "evaluation_operator", "logic_operator", "print", "read", "conditional",
-  "if_else", "if", "else_section", "else_if", "else", "switch_case",
-  "switch", "case_section", "case", "default_section", "default", "loop",
-  "while", "for", "for_structure", "for_expression", "for_assignment",
-  "return", YY_NULLPTR
+  "evaluation_operator", "logic_operator", "print", "print_content",
+  "read", "conditional", "if_else", "if", "else_section", "else_if",
+  "else", "switch_case", "switch", "case_section", "case",
+  "default_section", "default", "loop", "while", "for", "for_structure",
+  "for_expression", "for_assignment", "return", YY_NULLPTR
 };
 
 static const char *
@@ -845,7 +846,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-103)
+#define YYPACT_NINF (-106)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -859,28 +860,28 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int16 yypact[] =
 {
-      66,    19,    17,    57,    26,  -103,    38,    40,  -103,    45,
-      39,    19,  -103,    44,  -103,    26,    61,    66,    20,  -103,
-    -103,  -103,    19,     9,  -103,  -103,  -103,  -103,    16,  -103,
-      22,  -103,  -103,    50,    64,  -103,   -21,  -103,  -103,  -103,
-    -103,  -103,     9,  -103,    90,    55,  -103,   108,  -103,    59,
-    -103,  -103,  -103,    95,    96,    97,    99,     8,   100,   102,
-    -103,     9,    98,    43,   103,  -103,   111,  -103,  -103,  -103,
-    -103,  -103,   101,  -103,   106,  -103,  -103,  -103,  -103,   105,
-     109,  -103,   122,    -9,  -103,  -103,     9,  -103,  -103,  -103,
-       9,     9,  -103,  -103,  -103,   145,     9,     6,    75,    61,
-      19,    15,    12,    61,    77,  -103,  -103,     8,   153,    90,
-    -103,  -103,  -103,  -103,  -103,  -103,  -103,  -103,     9,  -103,
-      98,   110,    61,  -103,   101,  -103,   137,   158,  -103,  -103,
-    -103,  -103,   112,  -103,   123,  -103,    55,  -103,  -103,    19,
-     114,  -103,   125,    42,   117,  -103,    19,   128,   118,   131,
-    -103,   121,  -103,  -103,  -103,  -103,  -103,  -103,  -103,     9,
-    -103,  -103,  -103,  -103,     8,   124,   126,    90,  -103,     8,
-    -103,  -103,   127,   150,   137,  -103,   122,  -103,  -103,   145,
-    -103,  -103,   134,     9,  -103,     8,  -103,    90,  -103,    61,
-    -103,   129,   130,   132,   133,  -103,  -103,  -103,  -103,     9,
-      90,   138,  -103,    61,    22,    22,  -103,    90,    19,  -103,
-    -103,  -103,  -103
+     112,    12,     7,    19,    30,  -106,   -14,    -5,  -106,    28,
+      34,    12,  -106,    39,  -106,    30,     2,   112,     9,  -106,
+    -106,  -106,    12,    27,  -106,  -106,  -106,  -106,    11,  -106,
+     106,  -106,  -106,    76,    36,  -106,   -26,  -106,  -106,  -106,
+    -106,  -106,    27,  -106,    58,    46,  -106,    94,  -106,    98,
+    -106,  -106,  -106,    88,    96,    97,   100,     8,   101,   102,
+    -106,    27,    25,    44,    91,  -106,   108,  -106,  -106,  -106,
+    -106,  -106,   116,  -106,   103,  -106,  -106,  -106,  -106,   110,
+     105,  -106,   107,     6,  -106,  -106,    27,  -106,  -106,  -106,
+      27,    27,  -106,  -106,  -106,   145,    27,     5,    35,     2,
+      12,    13,    29,     2,    99,  -106,  -106,     8,   154,    58,
+    -106,  -106,  -106,  -106,  -106,  -106,  -106,  -106,    27,  -106,
+      25,   109,     2,  -106,   116,  -106,   135,   155,  -106,  -106,
+    -106,  -106,   111,  -106,   119,  -106,    46,  -106,  -106,    12,
+     114,  -106,   120,    37,   115,   118,  -106,    12,   125,   121,
+     130,  -106,   122,  -106,  -106,  -106,  -106,  -106,  -106,  -106,
+      27,  -106,  -106,  -106,  -106,     8,   123,   126,    58,  -106,
+       8,  -106,  -106,    84,   148,   135,  -106,   107,  -106,  -106,
+     145,    27,  -106,  -106,   134,    27,  -106,     8,  -106,    58,
+    -106,     2,  -106,   127,   129,   131,   136,  -106,  -106,  -106,
+    -106,  -106,    27,    58,   139,  -106,     2,   106,   106,  -106,
+      58,    12,  -106,  -106,  -106,  -106
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -895,45 +896,45 @@ static const yytype_uint8 yydefact[] =
       39,    40,     0,    41,    12,    22,    26,    31,    33,    34,
       42,    60,    61,     0,     0,     0,     0,     0,     0,     0,
       80,     0,    69,     0,     0,    71,     0,    74,    75,    76,
-      77,   108,   112,   109,     0,    78,   125,   126,    79,    19,
+      77,   110,   114,   111,     0,    78,   127,   128,    79,    19,
        0,    18,    44,     0,    23,    24,     0,    27,    28,    29,
        0,     0,    51,    52,    35,    62,     0,     0,     0,     0,
-       0,     0,     0,     0,    89,    91,    94,     0,     0,   133,
+       0,     0,     0,     0,    89,    91,    94,     0,     0,   135,
       70,    85,    86,    87,    88,    84,    83,    81,     0,    67,
-      72,     0,     0,   110,   112,   114,     0,     0,    20,    48,
+      72,     0,     0,   112,   114,   116,     0,     0,    20,    48,
       49,    50,     0,    45,    46,    32,    21,    25,    30,     0,
-       0,    63,    64,     0,     0,   107,     0,     0,     0,     0,
-     128,     0,    92,    96,    97,   100,   101,    98,    99,     0,
-     127,   102,   103,   104,     0,     0,     0,    82,    73,     0,
-     116,   113,     0,   122,   119,    43,     0,    66,    57,     0,
-     105,   106,     0,     0,   129,     0,    93,    95,    90,     0,
-     118,     0,     0,     0,     0,   123,   120,    47,    65,     0,
-     131,     0,   111,     0,    68,    68,   117,   132,     0,   115,
-     121,   124,   130
+       0,    63,    64,   106,     0,     0,   109,     0,     0,     0,
+       0,   130,     0,    92,    96,    97,   100,   101,    98,    99,
+       0,   129,   102,   103,   104,     0,     0,     0,    82,    73,
+       0,   118,   115,     0,   124,   121,    43,     0,    66,    57,
+       0,     0,   105,   108,     0,     0,   131,     0,    93,    95,
+      90,     0,   120,     0,     0,     0,     0,   125,   122,    47,
+      65,   107,     0,   133,     0,   113,     0,    68,    68,   119,
+     134,     0,   117,   123,   126,   132
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int16 yypgoto[] =
 {
-    -103,  -103,  -103,    28,  -103,    24,   -78,    -1,  -103,   146,
-     104,   -41,  -103,   107,  -103,    49,  -103,   -80,    74,   -74,
-    -103,    10,  -103,   135,   170,  -103,  -103,  -103,  -103,  -103,
-    -103,    13,  -103,   -96,   -61,   -56,  -103,   -19,  -103,  -103,
-    -102,  -103,    93,    91,  -103,  -103,  -103,  -103,  -103,  -103,
-    -103,    71,  -103,  -103,  -103,  -103,    23,  -103,  -103,  -103,
-    -103,  -103,  -103,  -103,  -103,  -103,  -103
+    -106,  -106,  -106,    23,  -106,    -2,   -76,    -1,  -106,   147,
+     104,   -20,  -106,   113,  -106,    51,  -106,   -70,    77,   -75,
+    -106,    14,  -106,   132,   169,  -106,  -106,  -106,  -106,  -106,
+    -106,    16,  -106,   -98,   -64,   -58,  -106,   -23,  -106,  -106,
+    -105,  -106,    92,   117,  -106,  -106,  -106,    17,  -106,  -106,
+    -106,  -106,    68,  -106,  -106,  -106,  -106,    22,  -106,  -106,
+    -106,  -106,  -106,  -106,  -106,  -106,  -106,  -106
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_uint8 yydefgoto[] =
 {
        0,     3,     4,    62,     6,     8,     9,    43,    19,    20,
-      21,    44,    86,    45,    90,    46,    47,    48,    49,    50,
+      21,   143,    86,    45,    90,    46,    47,    48,    49,    50,
      132,   133,   134,    94,    14,    15,    16,    27,    28,    53,
      140,   141,   142,    31,    64,    65,    66,    67,   117,   118,
-     103,   104,   105,   106,   159,   164,    68,    69,    70,    71,
-      72,   123,   124,   125,    73,    74,   173,   174,   194,   195,
-      75,    76,    77,    99,   148,   149,    78
+     103,   104,   105,   106,   160,   165,    68,   144,    69,    70,
+      71,    72,   123,   124,   125,    73,    74,   174,   175,   196,
+     197,    75,    76,    77,    99,   149,   150,    78
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -941,52 +942,54 @@ static const yytype_uint8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-      10,    83,   130,   150,   129,   165,   110,   160,   131,   144,
-      10,     7,    36,    37,    38,    39,    40,    41,     7,    51,
-     109,    10,     7,    18,    33,     7,   170,    11,     5,    63,
-      82,    52,     1,    54,    55,    24,     2,    84,    85,    56,
-      57,    58,    13,   135,    59,    32,    35,    60,    61,   153,
-     154,   155,   156,    25,    26,   143,   102,    12,   145,   100,
-      42,    63,   188,   101,   168,    34,   100,   191,   157,   158,
-     111,   112,   113,   114,    92,    93,     1,   167,     7,    17,
-       2,    10,    23,   201,    18,   146,   115,    22,    84,    85,
-      92,    93,   192,   202,   180,    79,   130,   147,   129,   102,
-     102,     7,   131,    87,    88,    89,   102,   209,    80,    54,
-      55,   161,   162,   163,    30,    56,    57,    58,   187,    63,
-      59,   121,   122,    60,    61,    36,    37,    38,    39,    40,
-      41,    37,    38,    39,    40,    41,    84,    85,   177,   137,
-     138,    91,   200,   210,   211,   182,    95,    96,    97,   127,
-      98,   107,   120,   108,    34,   139,    36,   119,   207,   126,
-     172,   169,    33,   102,   175,   176,   178,   179,   102,   181,
-     184,   183,   185,   186,   193,    10,   189,   199,   190,   208,
-      81,   203,   166,   128,   102,    29,   197,   206,   204,   212,
-     205,   151,   198,   136,   152,   171,     0,   196,   116,     0,
-       0,     0,     0,    63,    63,     0,     0,    63
+      10,   151,   166,    44,   110,   161,   129,   131,   145,    24,
+      10,     7,   130,    33,    51,     7,     7,    11,    18,    12,
+      35,    10,    83,     5,   171,    82,    52,    17,     7,    63,
+      36,    37,    38,    39,    40,    41,    54,    55,     7,    18,
+      32,   109,    56,    57,    58,   147,    13,    59,    25,    26,
+      60,    61,    84,    85,    34,    30,   102,   146,   135,   100,
+     190,    63,   169,   101,   100,   193,   154,   155,   156,   157,
+      22,   111,   112,   113,   114,    92,    93,    23,    42,   181,
+      80,    10,   204,    84,    85,   158,   159,   115,    37,    38,
+      39,    40,    41,   205,    87,    88,    89,   148,   168,   102,
+     102,   129,   131,   194,    84,    85,   102,   130,   212,     7,
+      36,    37,    38,    39,    40,    41,     1,    54,    55,    63,
+       2,    79,     1,    56,    57,    58,     2,    91,    59,    92,
+      93,    60,    61,   162,   163,   164,   121,   122,   178,    95,
+     189,   137,   138,   213,   214,   119,   184,    96,    97,   120,
+      34,    98,   107,   108,   127,   139,   126,    36,   173,    33,
+     170,   177,   180,   176,   102,   203,   179,   182,   185,   102,
+     183,   187,   195,   186,   188,   191,    10,   202,   192,   206,
+     211,    81,   210,   128,    29,   167,   102,   207,   215,   208,
+     209,   199,   172,   153,     0,   116,   200,   198,   201,   136,
+       0,     0,     0,     0,     0,     0,    63,    63,     0,     0,
+      63,     0,     0,     0,     0,     0,     0,   152
 };
 
 static const yytype_int16 yycheck[] =
 {
-       1,    42,    82,    99,    82,   107,    62,   103,    82,     3,
-      11,     3,     3,     4,     5,     6,     7,     8,     3,     3,
-      61,    22,     3,    44,     4,     3,   122,    10,     0,    30,
-      51,    15,    10,    11,    12,    11,    14,    46,    47,    17,
-      18,    19,    16,    52,    22,    17,    22,    25,    26,    37,
-      38,    39,    40,     9,    10,    96,    57,     0,    52,    51,
-      51,    62,   164,    55,   120,    45,    51,   169,    56,    57,
-      27,    28,    29,    30,    31,    32,    10,   118,     3,    41,
-      14,    82,    43,   185,    44,    10,    43,    42,    46,    47,
-      31,    32,   172,   189,    52,    45,   176,    98,   176,   100,
-     101,     3,   176,    48,    49,    50,   107,   203,    44,    11,
-      12,    34,    35,    36,    53,    17,    18,    19,   159,   120,
-      22,    20,    21,    25,    26,     3,     4,     5,     6,     7,
-       8,     4,     5,     6,     7,     8,    46,    47,   139,    90,
-      91,    33,   183,   204,   205,   146,    51,    51,    51,    44,
-      51,    51,    41,    51,    45,    10,     3,    54,   199,    53,
-      23,    51,     4,   164,    52,    42,    52,    42,   169,    52,
-      52,    43,    41,    52,    24,   176,    52,    43,    52,    41,
-      34,    52,   108,    79,   185,    15,   176,    54,    58,   208,
-      58,   100,   179,    86,   101,   124,    -1,   174,    63,    -1,
-      -1,    -1,    -1,   204,   205,    -1,    -1,   208
+       1,    99,   107,    23,    62,   103,    82,    82,     3,    11,
+      11,     3,    82,     4,     3,     3,     3,    10,    44,     0,
+      22,    22,    42,     0,   122,    51,    15,    41,     3,    30,
+       3,     4,     5,     6,     7,     8,    11,    12,     3,    44,
+      17,    61,    17,    18,    19,    10,    16,    22,     9,    10,
+      25,    26,    46,    47,    45,    53,    57,    52,    52,    51,
+     165,    62,   120,    55,    51,   170,    37,    38,    39,    40,
+      42,    27,    28,    29,    30,    31,    32,    43,    51,    42,
+      44,    82,   187,    46,    47,    56,    57,    43,     4,     5,
+       6,     7,     8,   191,    48,    49,    50,    98,   118,   100,
+     101,   177,   177,   173,    46,    47,   107,   177,   206,     3,
+       3,     4,     5,     6,     7,     8,    10,    11,    12,   120,
+      14,    45,    10,    17,    18,    19,    14,    33,    22,    31,
+      32,    25,    26,    34,    35,    36,    20,    21,   139,    51,
+     160,    90,    91,   207,   208,    54,   147,    51,    51,    41,
+      45,    51,    51,    51,    44,    10,    53,     3,    23,     4,
+      51,    42,    42,    52,   165,   185,    52,    52,    43,   170,
+      52,    41,    24,    52,    52,    52,   177,    43,    52,    52,
+      41,    34,   202,    79,    15,   108,   187,    58,   211,    58,
+      54,   177,   124,   101,    -1,    63,   180,   175,   181,    86,
+      -1,    -1,    -1,    -1,    -1,    -1,   207,   208,    -1,    -1,
+     211,    -1,    -1,    -1,    -1,    -1,    -1,   100
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
@@ -999,22 +1002,22 @@ static const yytype_int8 yystos[] =
       53,    92,    62,     4,    45,    64,     3,     4,     5,     6,
        7,     8,    51,    66,    70,    72,    74,    75,    76,    77,
       78,     3,    15,    88,    11,    12,    17,    18,    19,    22,
-      25,    26,    62,    66,    93,    94,    95,    96,   105,   106,
-     107,   108,   109,   113,   114,   119,   120,   121,   125,    45,
+      25,    26,    62,    66,    93,    94,    95,    96,   105,   107,
+     108,   109,   110,   114,   115,   120,   121,   122,   126,    45,
       44,    68,    51,    70,    46,    47,    71,    48,    49,    50,
-      73,    33,    31,    32,    82,    51,    51,    51,    51,   122,
+      73,    33,    31,    32,    82,    51,    51,    51,    51,   123,
       51,    55,    66,    99,   100,   101,   102,    51,    51,    70,
       94,    27,    28,    29,    30,    43,    82,    97,    98,    54,
-      41,    20,    21,   110,   111,   112,    53,    44,    69,    65,
+      41,    20,    21,   111,   112,   113,    53,    44,    69,    65,
       76,    78,    79,    80,    81,    52,    72,    74,    74,    10,
-      89,    90,    91,    70,     3,    52,    10,    66,   123,   124,
-      92,   102,   101,    37,    38,    39,    40,    56,    57,   103,
-      92,    34,    35,    36,   104,    99,    77,    70,    94,    51,
-      92,   110,    23,   115,   116,    52,    42,    66,    52,    42,
-      52,    52,    66,    43,    52,    41,    52,    70,    99,    52,
-      52,    99,    76,    24,   117,   118,   115,    80,    90,    43,
-      70,    99,    92,    52,    58,    58,    54,    70,    41,    92,
-      93,    93,    96
+      89,    90,    91,    70,   106,     3,    52,    10,    66,   124,
+     125,    92,   102,   101,    37,    38,    39,    40,    56,    57,
+     103,    92,    34,    35,    36,   104,    99,    77,    70,    94,
+      51,    92,   111,    23,   116,   117,    52,    42,    66,    52,
+      42,    42,    52,    52,    66,    43,    52,    41,    52,    70,
+      99,    52,    52,    99,    76,    24,   118,   119,   116,    80,
+      90,   106,    43,    70,    99,    92,    52,    58,    58,    54,
+      70,    41,    92,    93,    93,    96
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
@@ -1031,9 +1034,9 @@ static const yytype_int8 yyr1[] =
       95,    96,    97,    97,    98,    98,    98,    98,    98,    99,
       99,   100,   100,   101,   101,   102,   103,   103,   103,   103,
      103,   103,   104,   104,   104,   105,   106,   106,   107,   107,
-     108,   109,   110,   110,   110,   111,   112,   113,   114,   115,
-     115,   116,   117,   117,   118,   119,   119,   120,   121,   122,
-     123,   124,   124,   125
+     108,   108,   109,   110,   111,   111,   111,   112,   113,   114,
+     115,   116,   116,   117,   118,   118,   119,   120,   120,   121,
+     122,   123,   124,   125,   125,   126
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
@@ -1049,10 +1052,10 @@ static const yytype_int8 yyr2[] =
        2,     1,     2,     3,     1,     1,     1,     1,     1,     1,
        1,     2,     2,     1,     1,     1,     1,     1,     1,     1,
        3,     1,     2,     3,     1,     3,     1,     1,     1,     1,
-       1,     1,     1,     1,     1,     4,     4,     3,     1,     1,
-       2,     5,     0,     2,     1,     5,     2,     5,     4,     1,
-       2,     4,     0,     1,     3,     1,     1,     3,     3,     3,
-       5,     3,     4,     2
+       1,     1,     1,     1,     1,     4,     1,     3,     4,     3,
+       1,     1,     2,     5,     0,     2,     1,     5,     2,     5,
+       4,     1,     2,     4,     0,     1,     3,     1,     1,     3,
+       3,     3,     5,     3,     4,     2
 };
 
 
@@ -1520,19 +1523,19 @@ yyreduce:
                                                                                                                 {fprintf(yyout, "%s\n%s", (yyvsp[-1].rec)->code, (yyvsp[0].rec)->code);
 																				freeRecord((yyvsp[-1].rec));
 																				freeRecord((yyvsp[0].rec));}
-#line 1524 "y.tab.c"
+#line 1527 "y.tab.c"
     break;
 
   case 3: /* declarations_section: %empty  */
 #line 79 "parser.y"
                                                                                                                                         {(yyval.rec) = createRecord("","");}
-#line 1530 "y.tab.c"
+#line 1533 "y.tab.c"
     break;
 
   case 4: /* declarations_section: declarations_list  */
 #line 80 "parser.y"
                                                                                                                                 {(yyval.rec) = (yyvsp[0].rec);}
-#line 1536 "y.tab.c"
+#line 1539 "y.tab.c"
     break;
 
   case 5: /* declarations_list: declaration ';'  */
@@ -1541,7 +1544,7 @@ yyreduce:
 																				freeRecord((yyvsp[-1].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 1545 "y.tab.c"
+#line 1548 "y.tab.c"
     break;
 
   case 6: /* declarations_list: declaration ';' declarations_list  */
@@ -1551,7 +1554,7 @@ yyreduce:
 																				freeRecord((yyvsp[0].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 1555 "y.tab.c"
+#line 1558 "y.tab.c"
     break;
 
   case 7: /* declaration: TYPE id_list  */
@@ -1561,7 +1564,7 @@ yyreduce:
 																				freeRecord((yyvsp[0].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 1565 "y.tab.c"
+#line 1568 "y.tab.c"
     break;
 
   case 8: /* declaration: CONSTANT TYPE id_list  */
@@ -1571,13 +1574,13 @@ yyreduce:
 																				freeRecord((yyvsp[0].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 1575 "y.tab.c"
+#line 1578 "y.tab.c"
     break;
 
   case 9: /* id_list: id_declaration  */
 #line 107 "parser.y"
                                                                                                                                         {(yyval.rec) = (yyvsp[0].rec);}
-#line 1581 "y.tab.c"
+#line 1584 "y.tab.c"
     break;
 
   case 10: /* id_list: id_declaration ',' id_list  */
@@ -1587,13 +1590,13 @@ yyreduce:
 																				freeRecord((yyvsp[0].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 1591 "y.tab.c"
+#line 1594 "y.tab.c"
     break;
 
   case 11: /* id_declaration: id  */
 #line 116 "parser.y"
                                                                                                                                                 {(yyval.rec) = (yyvsp[0].rec);}
-#line 1597 "y.tab.c"
+#line 1600 "y.tab.c"
     break;
 
   case 12: /* id_declaration: id '=' expression  */
@@ -1603,7 +1606,7 @@ yyreduce:
 																				freeRecord((yyvsp[0].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 1607 "y.tab.c"
+#line 1610 "y.tab.c"
     break;
 
   case 13: /* id: ID dimensions  */
@@ -1613,31 +1616,31 @@ yyreduce:
 																				freeRecord((yyvsp[0].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 1617 "y.tab.c"
+#line 1620 "y.tab.c"
     break;
 
   case 14: /* dimensions: %empty  */
 #line 131 "parser.y"
                                                                                                                                                 {(yyval.rec) = createRecord("","");}
-#line 1623 "y.tab.c"
+#line 1626 "y.tab.c"
     break;
 
   case 15: /* dimensions: dimensions_novalue  */
 #line 132 "parser.y"
                                                                                                                                         {(yyval.rec) = (yyvsp[0].rec);}
-#line 1629 "y.tab.c"
+#line 1632 "y.tab.c"
     break;
 
   case 16: /* dimensions: dimensions_value  */
 #line 133 "parser.y"
                                                                                                                                         {(yyval.rec) = (yyvsp[0].rec);}
-#line 1635 "y.tab.c"
+#line 1638 "y.tab.c"
     break;
 
   case 17: /* dimensions_novalue: '[' ']'  */
 #line 136 "parser.y"
                                                                                                                                 {(yyval.rec) = createRecord("[]", "");}
-#line 1641 "y.tab.c"
+#line 1644 "y.tab.c"
     break;
 
   case 18: /* dimensions_novalue: '[' ']' dimensions_novalue  */
@@ -1645,7 +1648,7 @@ yyreduce:
                                                                                                                                 {char * s = cat("[]", (yyvsp[0].rec)->code, "", "", "");
 																				freeRecord((yyvsp[0].rec));
 																				(yyval.rec) = createRecord(s, "");}
-#line 1649 "y.tab.c"
+#line 1652 "y.tab.c"
     break;
 
   case 19: /* dimensions_value: '[' INT ']'  */
@@ -1653,7 +1656,7 @@ yyreduce:
                                                                                                                                 {char * s = cat("[", (yyvsp[-1].sValue), "]", "", "");
 																				free((yyvsp[-1].sValue));
 																				(yyval.rec) = createRecord(s, "");}
-#line 1657 "y.tab.c"
+#line 1660 "y.tab.c"
     break;
 
   case 20: /* dimensions_value: '[' INT ']' dimensions_value  */
@@ -1662,7 +1665,7 @@ yyreduce:
 																				free((yyvsp[-2].sValue));
 																				freeRecord((yyvsp[0].rec));
 																				(yyval.rec) = createRecord(s, "");}
-#line 1666 "y.tab.c"
+#line 1669 "y.tab.c"
     break;
 
   case 21: /* expression: expression expression_operator term  */
@@ -1673,25 +1676,25 @@ yyreduce:
 																				freeRecord((yyvsp[0].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 1677 "y.tab.c"
+#line 1680 "y.tab.c"
     break;
 
   case 22: /* expression: term  */
 #line 159 "parser.y"
                                                                                                                                                         {(yyval.rec) = (yyvsp[0].rec);}
-#line 1683 "y.tab.c"
+#line 1686 "y.tab.c"
     break;
 
   case 23: /* expression_operator: '+'  */
 #line 162 "parser.y"
                                                                                                                                         {(yyval.rec) = createRecord("+", "");}
-#line 1689 "y.tab.c"
+#line 1692 "y.tab.c"
     break;
 
   case 24: /* expression_operator: '-'  */
 #line 163 "parser.y"
                                                                                                                                                         {(yyval.rec) = createRecord("-", "");}
-#line 1695 "y.tab.c"
+#line 1698 "y.tab.c"
     break;
 
   case 25: /* term: term term_operator factor  */
@@ -1702,31 +1705,31 @@ yyreduce:
 																				freeRecord((yyvsp[0].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 1706 "y.tab.c"
+#line 1709 "y.tab.c"
     break;
 
   case 26: /* term: factor  */
 #line 174 "parser.y"
                                                                                                                                                         {(yyval.rec) = (yyvsp[0].rec);}
-#line 1712 "y.tab.c"
+#line 1715 "y.tab.c"
     break;
 
   case 27: /* term_operator: '*'  */
 #line 177 "parser.y"
                                                                                                                                         {(yyval.rec) = createRecord("*", "");}
-#line 1718 "y.tab.c"
+#line 1721 "y.tab.c"
     break;
 
   case 28: /* term_operator: '/'  */
 #line 178 "parser.y"
                                                                                                                                                         {(yyval.rec) = createRecord("/", "");}
-#line 1724 "y.tab.c"
+#line 1727 "y.tab.c"
     break;
 
   case 29: /* term_operator: '%'  */
 #line 179 "parser.y"
                                                                                                                                                         {(yyval.rec) = createRecord("%", "");}
-#line 1730 "y.tab.c"
+#line 1733 "y.tab.c"
     break;
 
   case 30: /* factor: base POWER factor  */
@@ -1736,13 +1739,13 @@ yyreduce:
 																				freeRecord((yyvsp[0].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 1740 "y.tab.c"
+#line 1743 "y.tab.c"
     break;
 
   case 31: /* factor: base  */
 #line 188 "parser.y"
                                                                                                                                                         {(yyval.rec) = (yyvsp[0].rec);}
-#line 1746 "y.tab.c"
+#line 1749 "y.tab.c"
     break;
 
   case 32: /* base: '(' expression ')'  */
@@ -1751,19 +1754,19 @@ yyreduce:
 																				(yyval.rec) = createRecord(s, (yyvsp[-1].rec)->type);
 																				freeRecord((yyvsp[-1].rec));
 																				free(s);}
-#line 1755 "y.tab.c"
+#line 1758 "y.tab.c"
     break;
 
   case 33: /* base: literal  */
 #line 195 "parser.y"
                                                                                                                                                         {(yyval.rec) = (yyvsp[0].rec);}
-#line 1761 "y.tab.c"
+#line 1764 "y.tab.c"
     break;
 
   case 34: /* base: id_value  */
 #line 196 "parser.y"
                                                                                                                                                 {(yyval.rec) = (yyvsp[0].rec);}
-#line 1767 "y.tab.c"
+#line 1770 "y.tab.c"
     break;
 
   case 35: /* base: id_value double_sign  */
@@ -1773,54 +1776,54 @@ yyreduce:
 																				freeRecord((yyvsp[0].rec));
 																				(yyval.rec) = createRecord(s, (yyvsp[-1].rec)->type);
 																				free(s);}
-#line 1777 "y.tab.c"
+#line 1780 "y.tab.c"
     break;
 
   case 36: /* literal: INT  */
 #line 204 "parser.y"
                                                                                                                                                 {(yyval.rec) = createRecord((yyvsp[0].sValue), "");
 																				free((yyvsp[0].sValue));}
-#line 1784 "y.tab.c"
+#line 1787 "y.tab.c"
     break;
 
   case 37: /* literal: REAL  */
 #line 206 "parser.y"
                                                                                                                                                         {(yyval.rec) = createRecord((yyvsp[0].sValue), "");
 																				free((yyvsp[0].sValue));}
-#line 1791 "y.tab.c"
+#line 1794 "y.tab.c"
     break;
 
   case 38: /* literal: BOOLEAN  */
 #line 208 "parser.y"
                                                                                                                                                 {(yyval.rec) = createRecord((yyvsp[0].sValue), "");
 																				free((yyvsp[0].sValue));}
-#line 1798 "y.tab.c"
+#line 1801 "y.tab.c"
     break;
 
   case 39: /* literal: CHAR  */
 #line 210 "parser.y"
                                                                                                                                                         {(yyval.rec) = createRecord((yyvsp[0].sValue), "");
 																				free((yyvsp[0].sValue));}
-#line 1805 "y.tab.c"
+#line 1808 "y.tab.c"
     break;
 
   case 40: /* literal: STRING  */
 #line 212 "parser.y"
                                                                                                                                                 {(yyval.rec) = createRecord((yyvsp[0].sValue), "");
 																				free((yyvsp[0].sValue));}
-#line 1812 "y.tab.c"
+#line 1815 "y.tab.c"
     break;
 
   case 41: /* id_value: id  */
 #line 216 "parser.y"
                                                                                                                                                 {(yyval.rec) = (yyvsp[0].rec);}
-#line 1818 "y.tab.c"
+#line 1821 "y.tab.c"
     break;
 
   case 42: /* id_value: function_call  */
 #line 217 "parser.y"
                                                                                                                                                 {(yyval.rec) = (yyvsp[0].rec);}
-#line 1824 "y.tab.c"
+#line 1827 "y.tab.c"
     break;
 
   case 43: /* function_call: ID '(' arguments ')'  */
@@ -1830,25 +1833,25 @@ yyreduce:
 																				freeRecord((yyvsp[-1].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 1834 "y.tab.c"
+#line 1837 "y.tab.c"
     break;
 
   case 44: /* arguments: %empty  */
 #line 227 "parser.y"
                                                                                                                                                 {(yyval.rec) = createRecord("","");}
-#line 1840 "y.tab.c"
+#line 1843 "y.tab.c"
     break;
 
   case 45: /* arguments: arguments_list  */
 #line 228 "parser.y"
                                                                                                                                                 {(yyval.rec) = (yyvsp[0].rec);}
-#line 1846 "y.tab.c"
+#line 1849 "y.tab.c"
     break;
 
   case 46: /* arguments_list: argument  */
 #line 231 "parser.y"
                                                                                                                                         {(yyval.rec) = (yyvsp[0].rec);}
-#line 1852 "y.tab.c"
+#line 1855 "y.tab.c"
     break;
 
   case 47: /* arguments_list: argument ',' arguments_list  */
@@ -1858,43 +1861,43 @@ yyreduce:
 																				freeRecord((yyvsp[0].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 1862 "y.tab.c"
+#line 1865 "y.tab.c"
     break;
 
   case 48: /* argument: id_declaration  */
 #line 239 "parser.y"
                                                                                                                                         {(yyval.rec) = (yyvsp[0].rec);}
-#line 1868 "y.tab.c"
+#line 1871 "y.tab.c"
     break;
 
   case 49: /* argument: literal  */
 #line 240 "parser.y"
                                                                                                                                                         {(yyval.rec) = (yyvsp[0].rec);}
-#line 1874 "y.tab.c"
+#line 1877 "y.tab.c"
     break;
 
   case 50: /* argument: function_call  */
 #line 241 "parser.y"
                                                                                                                                                 {(yyval.rec) = (yyvsp[0].rec);}
-#line 1880 "y.tab.c"
+#line 1883 "y.tab.c"
     break;
 
   case 51: /* double_sign: DOUBLE_PLUS  */
 #line 244 "parser.y"
                                                                                                                                         {(yyval.rec) = createRecord("++", "");}
-#line 1886 "y.tab.c"
+#line 1889 "y.tab.c"
     break;
 
   case 52: /* double_sign: DOUBLE_MINUS  */
 #line 245 "parser.y"
                                                                                                                                                 {(yyval.rec) = createRecord("--", "");}
-#line 1892 "y.tab.c"
+#line 1895 "y.tab.c"
     break;
 
   case 53: /* subprograms_section: subprogram  */
 #line 248 "parser.y"
                                                                                                                                 {(yyval.rec) = (yyvsp[0].rec);}
-#line 1898 "y.tab.c"
+#line 1901 "y.tab.c"
     break;
 
   case 54: /* subprograms_section: subprogram subprograms_section  */
@@ -1904,7 +1907,7 @@ yyreduce:
 																				freeRecord((yyvsp[0].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 1908 "y.tab.c"
+#line 1911 "y.tab.c"
     break;
 
   case 55: /* subprogram: header block  */
@@ -1914,7 +1917,7 @@ yyreduce:
 																				freeRecord((yyvsp[0].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 1918 "y.tab.c"
+#line 1921 "y.tab.c"
     break;
 
   case 56: /* header: FUNCTION signature  */
@@ -1923,7 +1926,7 @@ yyreduce:
 																				freeRecord((yyvsp[0].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 1927 "y.tab.c"
+#line 1930 "y.tab.c"
     break;
 
   case 57: /* signature: subprogram_type subprogram_id '(' parameters ')'  */
@@ -1934,51 +1937,51 @@ yyreduce:
 																				freeRecord((yyvsp[-1].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 1938 "y.tab.c"
+#line 1941 "y.tab.c"
     break;
 
   case 58: /* subprogram_type: TYPE  */
 #line 277 "parser.y"
                                                                                                                                         {(yyval.rec) = createRecord(convert((yyvsp[0].sValue)), "");
 																				free((yyvsp[0].sValue));}
-#line 1945 "y.tab.c"
+#line 1948 "y.tab.c"
     break;
 
   case 59: /* subprogram_type: VOID  */
 #line 279 "parser.y"
                                                                                                                                                         {(yyval.rec) = createRecord("void", "");}
-#line 1951 "y.tab.c"
+#line 1954 "y.tab.c"
     break;
 
   case 60: /* subprogram_id: ID  */
 #line 282 "parser.y"
                                                                                                                                                 {(yyval.rec) = createRecord((yyvsp[0].sValue), "");
 																				free((yyvsp[0].sValue));}
-#line 1958 "y.tab.c"
+#line 1961 "y.tab.c"
     break;
 
   case 61: /* subprogram_id: MAIN_FUN  */
 #line 284 "parser.y"
                                                                                                                                                 {(yyval.rec) = createRecord("main", "");}
-#line 1964 "y.tab.c"
+#line 1967 "y.tab.c"
     break;
 
   case 62: /* parameters: %empty  */
 #line 287 "parser.y"
                                                                                                                                                 {(yyval.rec) = createRecord("","");}
-#line 1970 "y.tab.c"
+#line 1973 "y.tab.c"
     break;
 
   case 63: /* parameters: parameter_list  */
 #line 288 "parser.y"
                                                                                                                                         {(yyval.rec) = (yyvsp[0].rec);}
-#line 1976 "y.tab.c"
+#line 1979 "y.tab.c"
     break;
 
   case 64: /* parameter_list: parameter  */
 #line 291 "parser.y"
                                                                                                                                         {(yyval.rec) = (yyvsp[0].rec);}
-#line 1982 "y.tab.c"
+#line 1985 "y.tab.c"
     break;
 
   case 65: /* parameter_list: parameter ',' parameter_list  */
@@ -1988,7 +1991,7 @@ yyreduce:
 																				freeRecord((yyvsp[0].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 1992 "y.tab.c"
+#line 1995 "y.tab.c"
     break;
 
   case 66: /* parameter: TYPE id  */
@@ -1998,7 +2001,7 @@ yyreduce:
 																				freeRecord((yyvsp[0].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 2002 "y.tab.c"
+#line 2005 "y.tab.c"
     break;
 
   case 67: /* block: '{' body '}'  */
@@ -2007,19 +2010,19 @@ yyreduce:
 																				freeRecord((yyvsp[-1].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 2011 "y.tab.c"
+#line 2014 "y.tab.c"
     break;
 
   case 68: /* body: %empty  */
 #line 312 "parser.y"
                                                                                                                                                         {(yyval.rec) = createRecord("","");}
-#line 2017 "y.tab.c"
+#line 2020 "y.tab.c"
     break;
 
   case 69: /* body: declarations_list  */
 #line 313 "parser.y"
                                                                                                                                         {(yyval.rec) = (yyvsp[0].rec);}
-#line 2023 "y.tab.c"
+#line 2026 "y.tab.c"
     break;
 
   case 70: /* body: declarations_list statement_list  */
@@ -2029,13 +2032,13 @@ yyreduce:
 																				freeRecord((yyvsp[0].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 2033 "y.tab.c"
+#line 2036 "y.tab.c"
     break;
 
   case 71: /* body: statement_list  */
 #line 319 "parser.y"
                                                                                                                                                 {(yyval.rec) = (yyvsp[0].rec);}
-#line 2039 "y.tab.c"
+#line 2042 "y.tab.c"
     break;
 
   case 72: /* statement_list: statement ';'  */
@@ -2044,7 +2047,7 @@ yyreduce:
 																				freeRecord((yyvsp[-1].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 2048 "y.tab.c"
+#line 2051 "y.tab.c"
     break;
 
   case 73: /* statement_list: statement ';' statement_list  */
@@ -2054,49 +2057,49 @@ yyreduce:
 																				freeRecord((yyvsp[0].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 2058 "y.tab.c"
+#line 2061 "y.tab.c"
     break;
 
   case 74: /* statement: assignment  */
 #line 333 "parser.y"
                                                                                                                                         {(yyval.rec) = (yyvsp[0].rec);}
-#line 2064 "y.tab.c"
+#line 2067 "y.tab.c"
     break;
 
   case 75: /* statement: print  */
 #line 334 "parser.y"
                                                                                                                                                         {(yyval.rec) = (yyvsp[0].rec);}
-#line 2070 "y.tab.c"
+#line 2073 "y.tab.c"
     break;
 
   case 76: /* statement: read  */
 #line 335 "parser.y"
                                                                                                                                                         {(yyval.rec) = (yyvsp[0].rec);}
-#line 2076 "y.tab.c"
+#line 2079 "y.tab.c"
     break;
 
   case 77: /* statement: conditional  */
 #line 336 "parser.y"
                                                                                                                                                 {(yyval.rec) = (yyvsp[0].rec);}
-#line 2082 "y.tab.c"
+#line 2085 "y.tab.c"
     break;
 
   case 78: /* statement: loop  */
 #line 337 "parser.y"
                                                                                                                                                         {(yyval.rec) = (yyvsp[0].rec);}
-#line 2088 "y.tab.c"
+#line 2091 "y.tab.c"
     break;
 
   case 79: /* statement: return  */
 #line 338 "parser.y"
                                                                                                                                                         {(yyval.rec) = (yyvsp[0].rec);}
-#line 2094 "y.tab.c"
+#line 2097 "y.tab.c"
     break;
 
   case 80: /* statement: BREAK  */
 #line 339 "parser.y"
                                                                                                                                                         {(yyval.rec) = createRecord("break", "");}
-#line 2100 "y.tab.c"
+#line 2103 "y.tab.c"
     break;
 
   case 81: /* assignment: id assignment_operation  */
@@ -2106,7 +2109,7 @@ yyreduce:
 																				freeRecord((yyvsp[0].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 2110 "y.tab.c"
+#line 2113 "y.tab.c"
     break;
 
   case 82: /* assignment_operation: assignment_sign expression  */
@@ -2116,49 +2119,49 @@ yyreduce:
 																				freeRecord((yyvsp[0].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 2120 "y.tab.c"
+#line 2123 "y.tab.c"
     break;
 
   case 83: /* assignment_operation: double_sign  */
 #line 354 "parser.y"
                                                                                                                                                 {(yyval.rec) = (yyvsp[0].rec);}
-#line 2126 "y.tab.c"
+#line 2129 "y.tab.c"
     break;
 
   case 84: /* assignment_sign: '='  */
 #line 357 "parser.y"
                                                                                                                                         {(yyval.rec) = createRecord("=", "");}
-#line 2132 "y.tab.c"
+#line 2135 "y.tab.c"
     break;
 
   case 85: /* assignment_sign: PLUS_ASSIGN  */
 #line 358 "parser.y"
                                                                                                                                                 {(yyval.rec) = createRecord("+=", "");}
-#line 2138 "y.tab.c"
+#line 2141 "y.tab.c"
     break;
 
   case 86: /* assignment_sign: MINUS_ASSIGN  */
 #line 359 "parser.y"
                                                                                                                                                 {(yyval.rec) = createRecord("-=", "");}
-#line 2144 "y.tab.c"
+#line 2147 "y.tab.c"
     break;
 
   case 87: /* assignment_sign: DIV_ASSIGN  */
 #line 360 "parser.y"
                                                                                                                                                 {(yyval.rec) = createRecord("/=", "");}
-#line 2150 "y.tab.c"
+#line 2153 "y.tab.c"
     break;
 
   case 88: /* assignment_sign: TIMES_ASSIGN  */
 #line 361 "parser.y"
                                                                                                                                                 {(yyval.rec) = createRecord("*=", "");}
-#line 2156 "y.tab.c"
+#line 2159 "y.tab.c"
     break;
 
   case 89: /* evaluation: comparation  */
 #line 364 "parser.y"
                                                                                                                                         {(yyval.rec) = (yyvsp[0].rec);}
-#line 2162 "y.tab.c"
+#line 2165 "y.tab.c"
     break;
 
   case 90: /* evaluation: comparation logic_operator evaluation  */
@@ -2169,13 +2172,13 @@ yyreduce:
 																				freeRecord((yyvsp[0].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 2173 "y.tab.c"
+#line 2176 "y.tab.c"
     break;
 
   case 91: /* comparation: comparison  */
 #line 373 "parser.y"
                                                                                                                                         {(yyval.rec) = (yyvsp[0].rec);}
-#line 2179 "y.tab.c"
+#line 2182 "y.tab.c"
     break;
 
   case 92: /* comparation: '!' comparison  */
@@ -2184,7 +2187,7 @@ yyreduce:
 																				freeRecord((yyvsp[0].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 2188 "y.tab.c"
+#line 2191 "y.tab.c"
     break;
 
   case 93: /* comparison: '(' compare ')'  */
@@ -2193,13 +2196,13 @@ yyreduce:
 																				freeRecord((yyvsp[-1].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 2197 "y.tab.c"
+#line 2200 "y.tab.c"
     break;
 
   case 94: /* comparison: compare  */
 #line 384 "parser.y"
                                                                                                                                                 {(yyval.rec) = (yyvsp[0].rec);}
-#line 2203 "y.tab.c"
+#line 2206 "y.tab.c"
     break;
 
   case 95: /* compare: id evaluation_operator expression  */
@@ -2210,308 +2213,324 @@ yyreduce:
 																				freeRecord((yyvsp[0].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 2214 "y.tab.c"
+#line 2217 "y.tab.c"
     break;
 
   case 96: /* evaluation_operator: EQUAL  */
 #line 395 "parser.y"
                                                                                                                                 {(yyval.rec) = createRecord("==", "");}
-#line 2220 "y.tab.c"
+#line 2223 "y.tab.c"
     break;
 
   case 97: /* evaluation_operator: NOT_EQUAL  */
 #line 396 "parser.y"
                                                                                                                                                 {(yyval.rec) = createRecord("!=", "");}
-#line 2226 "y.tab.c"
+#line 2229 "y.tab.c"
     break;
 
   case 98: /* evaluation_operator: '>'  */
 #line 397 "parser.y"
                                                                                                                                                         {(yyval.rec) = createRecord(">", "");}
-#line 2232 "y.tab.c"
+#line 2235 "y.tab.c"
     break;
 
   case 99: /* evaluation_operator: '<'  */
 #line 398 "parser.y"
                                                                                                                                                         {(yyval.rec) = createRecord("<", "");}
-#line 2238 "y.tab.c"
+#line 2241 "y.tab.c"
     break;
 
   case 100: /* evaluation_operator: EQ_GREATER  */
 #line 399 "parser.y"
                                                                                                                                                 {(yyval.rec) = createRecord(">=", "");}
-#line 2244 "y.tab.c"
+#line 2247 "y.tab.c"
     break;
 
   case 101: /* evaluation_operator: EQ_SMALLER  */
 #line 400 "parser.y"
                                                                                                                                                 {(yyval.rec) = createRecord("<=", "");}
-#line 2250 "y.tab.c"
+#line 2253 "y.tab.c"
     break;
 
   case 102: /* logic_operator: AND  */
 #line 403 "parser.y"
                                                                                                                                         {(yyval.rec) = createRecord("&&", "");}
-#line 2256 "y.tab.c"
+#line 2259 "y.tab.c"
     break;
 
   case 103: /* logic_operator: OR  */
 #line 404 "parser.y"
                                                                                                                                                         {(yyval.rec) = createRecord("||", "");}
-#line 2262 "y.tab.c"
+#line 2265 "y.tab.c"
     break;
 
   case 104: /* logic_operator: EOR  */
 #line 405 "parser.y"
                                                                                                                                                         {(yyval.rec) = createRecord("^", "");}
-#line 2268 "y.tab.c"
+#line 2271 "y.tab.c"
     break;
 
-  case 105: /* print: PRINT '(' expression ')'  */
+  case 105: /* print: PRINT '(' print_content ')'  */
 #line 409 "parser.y"
                                                                                                                                 {char * s = cat("printf(", (yyvsp[-1].rec)->code, ")", "", "");
 																				free((yyvsp[-1].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 2277 "y.tab.c"
+#line 2280 "y.tab.c"
     break;
 
-  case 106: /* read: READ '(' ID ')'  */
-#line 416 "parser.y"
-                                                                                                                                        {/*char * s = cat("scanf()");*/}
-#line 2283 "y.tab.c"
-    break;
-
-  case 107: /* read: READ '(' ')'  */
-#line 417 "parser.y"
-                                                                                                                                                {}
-#line 2289 "y.tab.c"
-    break;
-
-  case 108: /* conditional: if_else  */
-#line 420 "parser.y"
+  case 106: /* print_content: expression  */
+#line 415 "parser.y"
                                                                                                                                         {(yyval.rec) = (yyvsp[0].rec);}
-#line 2295 "y.tab.c"
+#line 2286 "y.tab.c"
     break;
 
-  case 109: /* conditional: switch_case  */
-#line 421 "parser.y"
-                                                                                                                                                {(yyval.rec) = (yyvsp[0].rec);}
-#line 2301 "y.tab.c"
+  case 107: /* print_content: expression ',' print_content  */
+#line 416 "parser.y"
+                                                                                                                                {char * s = cat((yyvsp[-2].rec)->code, ",", (yyvsp[0].rec)->code, "", "");
+			  																	freeRecord((yyvsp[-2].rec));
+																				freeRecord((yyvsp[0].rec));
+																				(yyval.rec) = createRecord(s, "");
+																				free(s);}
+#line 2296 "y.tab.c"
     break;
 
-  case 110: /* if_else: if else_section  */
+  case 108: /* read: READ '(' ID ')'  */
 #line 424 "parser.y"
+                                                                                                                                        {/*char * s = cat("scanf()");*/}
+#line 2302 "y.tab.c"
+    break;
+
+  case 109: /* read: READ '(' ')'  */
+#line 425 "parser.y"
+                                                                                                                                                {}
+#line 2308 "y.tab.c"
+    break;
+
+  case 110: /* conditional: if_else  */
+#line 428 "parser.y"
+                                                                                                                                        {(yyval.rec) = (yyvsp[0].rec);}
+#line 2314 "y.tab.c"
+    break;
+
+  case 111: /* conditional: switch_case  */
+#line 429 "parser.y"
+                                                                                                                                                {(yyval.rec) = (yyvsp[0].rec);}
+#line 2320 "y.tab.c"
+    break;
+
+  case 112: /* if_else: if else_section  */
+#line 432 "parser.y"
                                                                                                                                         {char * s = cat((yyvsp[-1].rec)->code, (yyvsp[0].rec)->code, "", "", "");
 																				freeRecord((yyvsp[-1].rec));
 																				freeRecord((yyvsp[0].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 2311 "y.tab.c"
+#line 2330 "y.tab.c"
     break;
 
-  case 111: /* if: IF '(' evaluation ')' block  */
-#line 431 "parser.y"
+  case 113: /* if: IF '(' evaluation ')' block  */
+#line 439 "parser.y"
                                                                                                                                 {char * s = cat("if ", "(", (yyvsp[-2].rec)->code, ")", (yyvsp[0].rec)->code);
 																				freeRecord((yyvsp[-2].rec));
 																				freeRecord((yyvsp[0].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 2321 "y.tab.c"
+#line 2340 "y.tab.c"
     break;
 
-  case 112: /* else_section: %empty  */
-#line 438 "parser.y"
+  case 114: /* else_section: %empty  */
+#line 446 "parser.y"
                                                                                                                                                 {(yyval.rec) = createRecord("","");}
-#line 2327 "y.tab.c"
+#line 2346 "y.tab.c"
     break;
 
-  case 113: /* else_section: else_if else_section  */
-#line 439 "parser.y"
+  case 115: /* else_section: else_if else_section  */
+#line 447 "parser.y"
                                                                                                                                         {char * s = cat((yyvsp[-1].rec)->code, (yyvsp[0].rec)->code, "", "", "");
 																				freeRecord((yyvsp[-1].rec));
 																				freeRecord((yyvsp[0].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 2337 "y.tab.c"
+#line 2356 "y.tab.c"
     break;
 
-  case 114: /* else_section: else  */
-#line 444 "parser.y"
+  case 116: /* else_section: else  */
+#line 452 "parser.y"
                                                                                                                                                         {(yyval.rec) = (yyvsp[0].rec);}
-#line 2343 "y.tab.c"
+#line 2362 "y.tab.c"
     break;
 
-  case 115: /* else_if: ELSE_IF '(' evaluation ')' block  */
-#line 447 "parser.y"
+  case 117: /* else_if: ELSE_IF '(' evaluation ')' block  */
+#line 455 "parser.y"
                                                                                                                         {char * s = cat("else if ", "(", (yyvsp[-2].rec)->code, ")", (yyvsp[0].rec)->code);
 																				freeRecord((yyvsp[-2].rec));
 																				freeRecord((yyvsp[0].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 2353 "y.tab.c"
+#line 2372 "y.tab.c"
     break;
 
-  case 116: /* else: ELSE block  */
-#line 454 "parser.y"
+  case 118: /* else: ELSE block  */
+#line 462 "parser.y"
                                                                                                                                                 {char * s = cat("else ", (yyvsp[0].rec)->code, "", "", "");
 																				freeRecord((yyvsp[0].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 2362 "y.tab.c"
+#line 2381 "y.tab.c"
     break;
 
-  case 117: /* switch_case: switch '{' case_section default_section '}'  */
-#line 460 "parser.y"
+  case 119: /* switch_case: switch '{' case_section default_section '}'  */
+#line 468 "parser.y"
                                                                                                         {char * s = cat((yyvsp[-4].rec)->code, "{", (yyvsp[-2].rec)->code, (yyvsp[-1].rec)->code, "}");
 																				freeRecord((yyvsp[-4].rec));
 																				freeRecord((yyvsp[-2].rec));
 																				freeRecord((yyvsp[-1].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 2373 "y.tab.c"
+#line 2392 "y.tab.c"
     break;
 
-  case 118: /* switch: SWITCH '(' id_value ')'  */
-#line 468 "parser.y"
+  case 120: /* switch: SWITCH '(' id_value ')'  */
+#line 476 "parser.y"
                                                                                                                                 {char * s = cat("switch ", "(", (yyvsp[-1].rec)->code, ")", "");
 																				freeRecord((yyvsp[-1].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 2382 "y.tab.c"
+#line 2401 "y.tab.c"
     break;
 
-  case 119: /* case_section: case  */
-#line 474 "parser.y"
+  case 121: /* case_section: case  */
+#line 482 "parser.y"
                                                                                                                                         {(yyval.rec) = (yyvsp[0].rec);}
-#line 2388 "y.tab.c"
+#line 2407 "y.tab.c"
     break;
 
-  case 120: /* case_section: case case_section  */
-#line 475 "parser.y"
+  case 122: /* case_section: case case_section  */
+#line 483 "parser.y"
                                                                                                                                         {char * s = cat((yyvsp[-1].rec)->code, (yyvsp[0].rec)->code, "", "", "");
 																				freeRecord((yyvsp[-1].rec));
 																				freeRecord((yyvsp[0].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 2398 "y.tab.c"
+#line 2417 "y.tab.c"
     break;
 
-  case 121: /* case: CASE literal ':' body  */
-#line 482 "parser.y"
+  case 123: /* case: CASE literal ':' body  */
+#line 490 "parser.y"
                                                                                                                                 {char * s = cat("case ", (yyvsp[-2].rec)->code, ":", (yyvsp[0].rec)->code, "");
 																				freeRecord((yyvsp[-2].rec));
 																				freeRecord((yyvsp[0].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 2408 "y.tab.c"
+#line 2427 "y.tab.c"
     break;
 
-  case 122: /* default_section: %empty  */
-#line 489 "parser.y"
+  case 124: /* default_section: %empty  */
+#line 497 "parser.y"
                                                                                                                                                 {(yyval.rec) = createRecord("","");}
-#line 2414 "y.tab.c"
+#line 2433 "y.tab.c"
     break;
 
-  case 123: /* default_section: default  */
-#line 490 "parser.y"
+  case 125: /* default_section: default  */
+#line 498 "parser.y"
                                                                                                                                                         {(yyval.rec) = (yyvsp[0].rec);}
-#line 2420 "y.tab.c"
+#line 2439 "y.tab.c"
     break;
 
-  case 124: /* default: DEFAULT ':' body  */
-#line 493 "parser.y"
+  case 126: /* default: DEFAULT ':' body  */
+#line 501 "parser.y"
                                                                                                                                         {char * s = cat("default", ":", (yyvsp[0].rec)->code, "", "");
 																				freeRecord((yyvsp[0].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 2429 "y.tab.c"
+#line 2448 "y.tab.c"
     break;
 
-  case 125: /* loop: while  */
-#line 499 "parser.y"
+  case 127: /* loop: while  */
+#line 507 "parser.y"
                                                                                                                                                 {(yyval.rec) = (yyvsp[0].rec);}
-#line 2435 "y.tab.c"
+#line 2454 "y.tab.c"
     break;
 
-  case 126: /* loop: for  */
-#line 500 "parser.y"
+  case 128: /* loop: for  */
+#line 508 "parser.y"
                                                                                                                                                         {(yyval.rec) = (yyvsp[0].rec);}
-#line 2441 "y.tab.c"
+#line 2460 "y.tab.c"
     break;
 
-  case 127: /* while: WHILE evaluation block  */
-#line 503 "parser.y"
+  case 129: /* while: WHILE evaluation block  */
+#line 511 "parser.y"
                                                                                                                                 {char * s = cat("while ", (yyvsp[-1].rec)->code, (yyvsp[0].rec)->code, "", "");
 																				freeRecord((yyvsp[-1].rec));
 																				freeRecord((yyvsp[0].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 2451 "y.tab.c"
+#line 2470 "y.tab.c"
     break;
 
-  case 128: /* for: FOR for_structure block  */
-#line 510 "parser.y"
+  case 130: /* for: FOR for_structure block  */
+#line 518 "parser.y"
                                                                                                                                 {char * s = cat("for ", (yyvsp[-1].rec)->code, (yyvsp[0].rec)->code, "", "");
 																				freeRecord((yyvsp[-1].rec));
 																				freeRecord((yyvsp[0].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 2461 "y.tab.c"
+#line 2480 "y.tab.c"
     break;
 
-  case 129: /* for_structure: '(' for_expression ')'  */
-#line 517 "parser.y"
+  case 131: /* for_structure: '(' for_expression ')'  */
+#line 525 "parser.y"
                                                                                                                         {char * s = cat("(", (yyvsp[-1].rec)->code, ")", "", "");
 																				freeRecord((yyvsp[-1].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 2470 "y.tab.c"
+#line 2489 "y.tab.c"
     break;
 
-  case 130: /* for_expression: for_assignment ';' evaluation ';' assignment  */
-#line 523 "parser.y"
+  case 132: /* for_expression: for_assignment ';' evaluation ';' assignment  */
+#line 531 "parser.y"
                                                                                                 {char * s = cat((yyvsp[-4].rec)->code, ";", (yyvsp[-2].rec)->code, ";", (yyvsp[0].rec)->code);
 																				freeRecord((yyvsp[-4].rec));
 																				freeRecord((yyvsp[-2].rec));
 																				freeRecord((yyvsp[0].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 2481 "y.tab.c"
+#line 2500 "y.tab.c"
     break;
 
-  case 131: /* for_assignment: id '=' expression  */
-#line 532 "parser.y"
+  case 133: /* for_assignment: id '=' expression  */
+#line 540 "parser.y"
                                                                                                                                 {char * s = cat((yyvsp[-2].rec)->code, "=", (yyvsp[0].rec)->code, "", "");
 																				freeRecord((yyvsp[-2].rec));
 																				freeRecord((yyvsp[0].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 2491 "y.tab.c"
+#line 2510 "y.tab.c"
     break;
 
-  case 132: /* for_assignment: TYPE id '=' expression  */
-#line 537 "parser.y"
+  case 134: /* for_assignment: TYPE id '=' expression  */
+#line 545 "parser.y"
                                                                                                                                         {char * s = cat(convert((yyvsp[-3].sValue)), " ", (yyvsp[-2].rec)->code, "=", (yyvsp[0].rec)->code);
 																				free((yyvsp[-3].sValue));
 																				freeRecord((yyvsp[-2].rec));
 																				freeRecord((yyvsp[0].rec));
 																				(yyval.rec) = createRecord(s, "");
 																				free(s);}
-#line 2502 "y.tab.c"
+#line 2521 "y.tab.c"
     break;
 
-  case 133: /* return: RETURN expression  */
-#line 545 "parser.y"
+  case 135: /* return: RETURN expression  */
+#line 553 "parser.y"
                                                                                                                                         {char * s = cat("return ", (yyvsp[0].rec)->code, "", "", "");
 																				(yyval.rec) = createRecord(s, (yyvsp[0].rec)->type);
 																				freeRecord((yyvsp[0].rec));
 																				free(s);}
-#line 2511 "y.tab.c"
+#line 2530 "y.tab.c"
     break;
 
 
-#line 2515 "y.tab.c"
+#line 2534 "y.tab.c"
 
       default: break;
     }
@@ -2704,9 +2723,27 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 551 "parser.y"
+#line 559 "parser.y"
 
 
+int main(int argc, char ** argv){
+	int codigo;
+
+	if (argc != 3) {
+       printf("Closing application...\n");
+       exit(0);
+    }
+    
+    yyin = fopen(argv[1], "r");
+    yyout = fopen(argv[2], "w");
+
+    codigo = yyparse();
+
+    fclose(yyin);
+    fclose(yyout);
+
+	return codigo;
+}
 
 int yyerror (char *msg) {
 	fprintf (stderr, "%d: %s at '%s'\n", yylineno, msg, yytext);

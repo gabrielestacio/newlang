@@ -61,7 +61,7 @@ char * convert(char * type);
 %type <rec> expression expression_operator term term_operator factor base id_value literal double_sign function_call arguments arguments_list argument
 %type <rec> subprograms_section subprogram subprogram_type subprogram_id signature parameters parameter_list parameter statement_list statement return
 %type <rec> block body header
-%type <rec> print print_content read read_content
+%type <rec> print print_content read
 %type <rec> assignment assignment_operation assignment_sign
 %type <rec> conditional if_else if else_section else_if else switch_case switch case_section case default_section default
 %type <rec> loop while for for_structure for_expression for_assignment
@@ -412,7 +412,7 @@ print : PRINT '(' print_content ')'												{char * s = cat("printf(", $3->co
 																				free(s);}
 	  ;
 
-print_content : expression														{$$ = $1}
+print_content : expression														{$$ = $1;}
 			  | expression ',' print_content									{char * s = cat($1->code, ",", $3->code, "", "");
 			  																	freeRecord($1);
 																				freeRecord($3);
@@ -558,6 +558,24 @@ return : RETURN expression 														{char * s = cat("return ", $2->code, ""
 
 %%
 
+int main(int argc, char ** argv){
+	int codigo;
+
+	if (argc != 3) {
+       printf("Closing application...\n");
+       exit(0);
+    }
+    
+    yyin = fopen(argv[1], "r");
+    yyout = fopen(argv[2], "w");
+
+    codigo = yyparse();
+
+    fclose(yyin);
+    fclose(yyout);
+
+	return codigo;
+}
 
 int yyerror (char *msg) {
 	fprintf (stderr, "%d: %s at '%s'\n", yylineno, msg, yytext);

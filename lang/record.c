@@ -24,4 +24,3 @@ record * createRecord(char * c1, char * c2){
 
   return r;
 }
-

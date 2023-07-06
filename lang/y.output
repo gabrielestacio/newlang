@@ -155,55 +155,58 @@ Grammar
   102               | OR
   103               | EOR
 
-  104 print: PRINT '(' expression ')'
+  104 print: PRINT '(' print_content ')'
 
-  105 read: READ '(' ID ')'
-  106     | READ '(' ')'
+  105 print_content: expression
+  106              | expression ',' print_content
 
-  107 conditional: if_else
-  108            | switch_case
+  107 read: READ '(' ID ')'
+  108     | READ '(' ')'
 
-  109 if_else: if else_section
+  109 conditional: if_else
+  110            | switch_case
 
-  110 if: IF '(' evaluation ')' block
+  111 if_else: if else_section
 
-  111 else_section: ε
-  112             | else_if else_section
-  113             | else
+  112 if: IF '(' evaluation ')' block
 
-  114 else_if: ELSE_IF '(' evaluation ')' block
+  113 else_section: ε
+  114             | else_if else_section
+  115             | else
 
-  115 else: ELSE block
+  116 else_if: ELSE_IF '(' evaluation ')' block
 
-  116 switch_case: switch '{' case_section default_section '}'
+  117 else: ELSE block
 
-  117 switch: SWITCH '(' id_value ')'
+  118 switch_case: switch '{' case_section default_section '}'
 
-  118 case_section: case
-  119             | case case_section
+  119 switch: SWITCH '(' id_value ')'
 
-  120 case: CASE literal ':' body
+  120 case_section: case
+  121             | case case_section
 
-  121 default_section: ε
-  122                | default
+  122 case: CASE literal ':' body
 
-  123 default: DEFAULT ':' body
+  123 default_section: ε
+  124                | default
 
-  124 loop: while
-  125     | for
+  125 default: DEFAULT ':' body
 
-  126 while: WHILE evaluation block
+  126 loop: while
+  127     | for
 
-  127 for: FOR for_structure block
+  128 while: WHILE evaluation block
 
-  128 for_structure: '(' for_expression ')'
+  129 for: FOR for_structure block
 
-  129 for_expression: for_assignment ';' evaluation ';' assignment
+  130 for_structure: '(' for_expression ')'
 
-  130 for_assignment: id '=' expression
-  131               | TYPE id '=' expression
+  131 for_expression: for_assignment ';' evaluation ';' assignment
 
-  132 return: RETURN expression
+  132 for_assignment: id '=' expression
+  133               | TYPE id '=' expression
+
+  134 return: RETURN expression
 
 
 Terminals, with rules where they appear
@@ -211,47 +214,47 @@ Terminals, with rules where they appear
     $end (0) 0
     '!' (33) 91
     '%' (37) 28
-    '(' (40) 31 42 56 92 104 105 106 110 114 117 128
-    ')' (41) 31 42 56 92 104 105 106 110 114 117 128
+    '(' (40) 31 42 56 92 104 107 108 112 116 119 130
+    ')' (41) 31 42 56 92 104 107 108 112 116 119 130
     '*' (42) 26
     '+' (43) 22
-    ',' (44) 9 46 64
+    ',' (44) 9 46 64 106
     '-' (45) 23
     '/' (47) 27
-    ':' (58) 120 123
-    ';' (59) 4 5 71 72 129
+    ':' (58) 122 125
+    ';' (59) 4 5 71 72 131
     '<' (60) 98
-    '=' (61) 11 83 130 131
+    '=' (61) 11 83 132 133
     '>' (62) 97
     '[' (91) 16 17 18 19
     ']' (93) 16 17 18 19
-    '{' (123) 66 116
-    '}' (125) 66 116
+    '{' (123) 66 118
+    '}' (125) 66 118
     error (256)
-    ID <sValue> (258) 12 42 59 105
+    ID <sValue> (258) 12 42 59 107
     INT <sValue> (259) 18 19 35
     REAL <sValue> (260) 36
     BOOLEAN <sValue> (261) 37
     CHAR <sValue> (262) 38
     STRING <sValue> (263) 39
     VOID <sValue> (264) 58
-    TYPE <sValue> (265) 6 7 57 65 131
+    TYPE <sValue> (265) 6 7 57 65 133
     PRINT <sValue> (266) 104
-    READ <sValue> (267) 105 106
+    READ <sValue> (267) 107 108
     NULO (268)
     CONSTANT (269) 7
     MAIN_FUN (270) 60
     FUNCTION (271) 55
-    FOR (272) 127
-    WHILE (273) 126
-    IF (274) 110
-    ELSE_IF (275) 114
-    ELSE (276) 115
-    SWITCH (277) 117
-    CASE (278) 120
-    DEFAULT (279) 123
+    FOR (272) 129
+    WHILE (273) 128
+    IF (274) 112
+    ELSE_IF (275) 116
+    ELSE (276) 117
+    SWITCH (277) 119
+    CASE (278) 122
+    DEFAULT (279) 125
     BREAK (280) 79
-    RETURN (281) 132
+    RETURN (281) 134
     PLUS_ASSIGN (282) 84
     MINUS_ASSIGN (283) 85
     DIV_ASSIGN (284) 86
@@ -292,7 +295,7 @@ Nonterminals, with rules where they appear
         on right: 8 9 47
     id <rec> (66)
         on left: 12
-        on right: 10 11 40 65 80 94 130 131
+        on right: 10 11 40 65 80 94 132 133
     dimensions <rec> (67)
         on left: 13 14 15
         on right: 12
@@ -304,7 +307,7 @@ Nonterminals, with rules where they appear
         on right: 15 19
     expression <rec> (70)
         on left: 20 21
-        on right: 11 20 31 81 94 104 130 131 132
+        on right: 11 20 31 81 94 105 106 132 133 134
     expression_operator <rec> (71)
         on left: 22 23
         on right: 20
@@ -322,10 +325,10 @@ Nonterminals, with rules where they appear
         on right: 29 30
     literal <rec> (76)
         on left: 35 36 37 38 39
-        on right: 32 48 120
+        on right: 32 48 122
     id_value <rec> (77)
         on left: 40 41
-        on right: 33 34 117
+        on right: 33 34 119
     function_call <rec> (78)
         on left: 42
         on right: 41 49
@@ -370,10 +373,10 @@ Nonterminals, with rules where they appear
         on right: 63 64
     block <rec> (92)
         on left: 66
-        on right: 54 110 114 115 126 127
+        on right: 54 112 116 117 128 129
     body <rec> (93)
         on left: 67 68 69 70
-        on right: 66 120 123
+        on right: 66 122 125
     statement_list <rec> (94)
         on left: 71 72
         on right: 69 70 72
@@ -382,7 +385,7 @@ Nonterminals, with rules where they appear
         on right: 71 72
     assignment <rec> (96)
         on left: 80
-        on right: 73 129
+        on right: 73 131
     assignment_operation <rec> (97)
         on left: 81 82
         on right: 80
@@ -391,7 +394,7 @@ Nonterminals, with rules where they appear
         on right: 81
     evaluation <rec> (99)
         on left: 88 89
-        on right: 89 110 114 126 129
+        on right: 89 112 116 128 131
     comparation <rec> (100)
         on left: 90 91
         on right: 88 89
@@ -410,65 +413,68 @@ Nonterminals, with rules where they appear
     print <rec> (105)
         on left: 104
         on right: 74
-    read <rec> (106)
+    print_content <rec> (106)
         on left: 105 106
-        on right: 75
-    conditional <rec> (107)
+        on right: 104 106
+    read <rec> (107)
         on left: 107 108
+        on right: 75
+    conditional <rec> (108)
+        on left: 109 110
         on right: 76
-    if_else <rec> (108)
-        on left: 109
-        on right: 107
-    if <rec> (109)
-        on left: 110
+    if_else <rec> (109)
+        on left: 111
         on right: 109
-    else_section <rec> (110)
-        on left: 111 112 113
-        on right: 109 112
-    else_if <rec> (111)
-        on left: 114
-        on right: 112
-    else <rec> (112)
-        on left: 115
-        on right: 113
-    switch_case <rec> (113)
+    if <rec> (110)
+        on left: 112
+        on right: 111
+    else_section <rec> (111)
+        on left: 113 114 115
+        on right: 111 114
+    else_if <rec> (112)
         on left: 116
-        on right: 108
-    switch <rec> (114)
+        on right: 114
+    else <rec> (113)
         on left: 117
-        on right: 116
-    case_section <rec> (115)
-        on left: 118 119
-        on right: 116 119
-    case <rec> (116)
-        on left: 120
-        on right: 118 119
-    default_section <rec> (117)
-        on left: 121 122
-        on right: 116
-    default <rec> (118)
-        on left: 123
-        on right: 122
-    loop <rec> (119)
-        on left: 124 125
-        on right: 77
-    while <rec> (120)
-        on left: 126
+        on right: 115
+    switch_case <rec> (114)
+        on left: 118
+        on right: 110
+    switch <rec> (115)
+        on left: 119
+        on right: 118
+    case_section <rec> (116)
+        on left: 120 121
+        on right: 118 121
+    case <rec> (117)
+        on left: 122
+        on right: 120 121
+    default_section <rec> (118)
+        on left: 123 124
+        on right: 118
+    default <rec> (119)
+        on left: 125
         on right: 124
-    for <rec> (121)
-        on left: 127
-        on right: 125
-    for_structure <rec> (122)
+    loop <rec> (120)
+        on left: 126 127
+        on right: 77
+    while <rec> (121)
         on left: 128
-        on right: 127
-    for_expression <rec> (123)
+        on right: 126
+    for <rec> (122)
         on left: 129
-        on right: 128
-    for_assignment <rec> (124)
-        on left: 130 131
+        on right: 127
+    for_structure <rec> (123)
+        on left: 130
         on right: 129
-    return <rec> (125)
-        on left: 132
+    for_expression <rec> (124)
+        on left: 131
+        on right: 130
+    for_assignment <rec> (125)
+        on left: 132 133
+        on right: 131
+    return <rec> (126)
+        on left: 134
         on right: 78
 
 
@@ -1013,22 +1019,22 @@ State 53
 
 State 54
 
-  104 print: PRINT • '(' expression ')'
+  104 print: PRINT • '(' print_content ')'
 
     '('  shift, and go to state 96
 
 
 State 55
 
-  105 read: READ • '(' ID ')'
-  106     | READ • '(' ')'
+  107 read: READ • '(' ID ')'
+  108     | READ • '(' ')'
 
     '('  shift, and go to state 97
 
 
 State 56
 
-  127 for: FOR • for_structure block
+  129 for: FOR • for_structure block
 
     '('  shift, and go to state 98
 
@@ -1037,7 +1043,7 @@ State 56
 
 State 57
 
-  126 while: WHILE • evaluation block
+  128 while: WHILE • evaluation block
 
     ID   shift, and go to state 7
     '('  shift, and go to state 100
@@ -1052,14 +1058,14 @@ State 57
 
 State 58
 
-  110 if: IF • '(' evaluation ')' block
+  112 if: IF • '(' evaluation ')' block
 
     '('  shift, and go to state 107
 
 
 State 59
 
-  117 switch: SWITCH • '(' id_value ')'
+  119 switch: SWITCH • '(' id_value ')'
 
     '('  shift, and go to state 108
 
@@ -1073,7 +1079,7 @@ State 60
 
 State 61
 
-  132 return: RETURN • expression
+  134 return: RETURN • expression
 
     ID       shift, and go to state 36
     INT      shift, and go to state 37
@@ -1196,19 +1202,19 @@ State 70
 
 State 71
 
-  107 conditional: if_else •
+  109 conditional: if_else •
 
-    $default  reduce using rule 107 (conditional)
+    $default  reduce using rule 109 (conditional)
 
 
 State 72
 
-  109 if_else: if • else_section
+  111 if_else: if • else_section
 
     ELSE_IF  shift, and go to state 121
     ELSE     shift, and go to state 122
 
-    $default  reduce using rule 111 (else_section)
+    $default  reduce using rule 113 (else_section)
 
     else_section  go to state 123
     else_if       go to state 124
@@ -1217,14 +1223,14 @@ State 72
 
 State 73
 
-  108 conditional: switch_case •
+  110 conditional: switch_case •
 
-    $default  reduce using rule 108 (conditional)
+    $default  reduce using rule 110 (conditional)
 
 
 State 74
 
-  116 switch_case: switch • '{' case_section default_section '}'
+  118 switch_case: switch • '{' case_section default_section '}'
 
     '{'  shift, and go to state 126
 
@@ -1238,16 +1244,16 @@ State 75
 
 State 76
 
-  124 loop: while •
+  126 loop: while •
 
-    $default  reduce using rule 124 (loop)
+    $default  reduce using rule 126 (loop)
 
 
 State 77
 
-  125 loop: for •
+  127 loop: for •
 
-    $default  reduce using rule 125 (loop)
+    $default  reduce using rule 127 (loop)
 
 
 State 78
@@ -1450,7 +1456,7 @@ State 95
 
 State 96
 
-  104 print: PRINT '(' • expression ')'
+  104 print: PRINT '(' • print_content ')'
 
     ID       shift, and go to state 36
     INT      shift, and go to state 37
@@ -1468,36 +1474,37 @@ State 96
     literal        go to state 48
     id_value       go to state 49
     function_call  go to state 50
+    print_content  go to state 144
 
 
 State 97
 
-  105 read: READ '(' • ID ')'
-  106     | READ '(' • ')'
+  107 read: READ '(' • ID ')'
+  108     | READ '(' • ')'
 
-    ID   shift, and go to state 144
-    ')'  shift, and go to state 145
+    ID   shift, and go to state 145
+    ')'  shift, and go to state 146
 
 
 State 98
 
-  128 for_structure: '(' • for_expression ')'
+  130 for_structure: '(' • for_expression ')'
 
     ID    shift, and go to state 7
-    TYPE  shift, and go to state 146
+    TYPE  shift, and go to state 147
 
-    id              go to state 147
-    for_expression  go to state 148
-    for_assignment  go to state 149
+    id              go to state 148
+    for_expression  go to state 149
+    for_assignment  go to state 150
 
 
 State 99
 
-  127 for: FOR for_structure • block
+  129 for: FOR for_structure • block
 
     '{'  shift, and go to state 30
 
-    block  go to state 150
+    block  go to state 151
 
 
 State 100
@@ -1507,7 +1514,7 @@ State 100
     ID  shift, and go to state 7
 
     id       go to state 102
-    compare  go to state 151
+    compare  go to state 152
 
 
 State 101
@@ -1518,7 +1525,7 @@ State 101
     '('  shift, and go to state 100
 
     id          go to state 102
-    comparison  go to state 152
+    comparison  go to state 153
     compare     go to state 106
 
 
@@ -1526,23 +1533,23 @@ State 102
 
    94 compare: id • evaluation_operator expression
 
-    EQUAL       shift, and go to state 153
-    NOT_EQUAL   shift, and go to state 154
-    EQ_GREATER  shift, and go to state 155
-    EQ_SMALLER  shift, and go to state 156
-    '>'         shift, and go to state 157
-    '<'         shift, and go to state 158
+    EQUAL       shift, and go to state 154
+    NOT_EQUAL   shift, and go to state 155
+    EQ_GREATER  shift, and go to state 156
+    EQ_SMALLER  shift, and go to state 157
+    '>'         shift, and go to state 158
+    '<'         shift, and go to state 159
 
-    evaluation_operator  go to state 159
+    evaluation_operator  go to state 160
 
 
 State 103
 
-  126 while: WHILE evaluation • block
+  128 while: WHILE evaluation • block
 
     '{'  shift, and go to state 30
 
-    block  go to state 160
+    block  go to state 161
 
 
 State 104
@@ -1550,13 +1557,13 @@ State 104
    88 evaluation: comparation •
    89           | comparation • logic_operator evaluation
 
-    AND  shift, and go to state 161
-    OR   shift, and go to state 162
-    EOR  shift, and go to state 163
+    AND  shift, and go to state 162
+    OR   shift, and go to state 163
+    EOR  shift, and go to state 164
 
     $default  reduce using rule 88 (evaluation)
 
-    logic_operator  go to state 164
+    logic_operator  go to state 165
 
 
 State 105
@@ -1575,14 +1582,14 @@ State 106
 
 State 107
 
-  110 if: IF '(' • evaluation ')' block
+  112 if: IF '(' • evaluation ')' block
 
     ID   shift, and go to state 7
     '('  shift, and go to state 100
     '!'  shift, and go to state 101
 
     id           go to state 102
-    evaluation   go to state 165
+    evaluation   go to state 166
     comparation  go to state 104
     comparison   go to state 105
     compare      go to state 106
@@ -1590,24 +1597,24 @@ State 107
 
 State 108
 
-  117 switch: SWITCH '(' • id_value ')'
+  119 switch: SWITCH '(' • id_value ')'
 
     ID  shift, and go to state 36
 
     id             go to state 43
-    id_value       go to state 166
+    id_value       go to state 167
     function_call  go to state 50
 
 
 State 109
 
    20 expression: expression • expression_operator term
-  132 return: RETURN expression •
+  134 return: RETURN expression •
 
     '+'  shift, and go to state 84
     '-'  shift, and go to state 85
 
-    $default  reduce using rule 132 (return)
+    $default  reduce using rule 134 (return)
 
     expression_operator  go to state 86
 
@@ -1681,7 +1688,7 @@ State 118
     '('      shift, and go to state 42
 
     id             go to state 43
-    expression     go to state 167
+    expression     go to state 168
     term           go to state 45
     factor         go to state 46
     base           go to state 47
@@ -1715,7 +1722,7 @@ State 120
     $default  reduce using rule 71 (statement_list)
 
     id              go to state 63
-    statement_list  go to state 168
+    statement_list  go to state 169
     statement       go to state 66
     assignment      go to state 67
     print           go to state 68
@@ -1733,56 +1740,56 @@ State 120
 
 State 121
 
-  114 else_if: ELSE_IF • '(' evaluation ')' block
+  116 else_if: ELSE_IF • '(' evaluation ')' block
 
-    '('  shift, and go to state 169
+    '('  shift, and go to state 170
 
 
 State 122
 
-  115 else: ELSE • block
+  117 else: ELSE • block
 
     '{'  shift, and go to state 30
 
-    block  go to state 170
+    block  go to state 171
 
 
 State 123
 
-  109 if_else: if else_section •
+  111 if_else: if else_section •
 
-    $default  reduce using rule 109 (if_else)
+    $default  reduce using rule 111 (if_else)
 
 
 State 124
 
-  112 else_section: else_if • else_section
+  114 else_section: else_if • else_section
 
     ELSE_IF  shift, and go to state 121
     ELSE     shift, and go to state 122
 
-    $default  reduce using rule 111 (else_section)
+    $default  reduce using rule 113 (else_section)
 
-    else_section  go to state 171
+    else_section  go to state 172
     else_if       go to state 124
     else          go to state 125
 
 
 State 125
 
-  113 else_section: else •
+  115 else_section: else •
 
-    $default  reduce using rule 113 (else_section)
+    $default  reduce using rule 115 (else_section)
 
 
 State 126
 
-  116 switch_case: switch '{' • case_section default_section '}'
+  118 switch_case: switch '{' • case_section default_section '}'
 
-    CASE  shift, and go to state 172
+    CASE  shift, and go to state 173
 
-    case_section  go to state 173
-    case          go to state 174
+    case_section  go to state 174
+    case          go to state 175
 
 
 State 127
@@ -1825,7 +1832,7 @@ State 132
 
    42 function_call: ID '(' arguments • ')'
 
-    ')'  shift, and go to state 175
+    ')'  shift, and go to state 176
 
 
 State 133
@@ -1840,7 +1847,7 @@ State 134
    45 arguments_list: argument •
    46               | argument • ',' arguments_list
 
-    ','  shift, and go to state 176
+    ','  shift, and go to state 177
 
     $default  reduce using rule 45 (arguments_list)
 
@@ -1886,14 +1893,14 @@ State 139
 
     ID  shift, and go to state 7
 
-    id  go to state 177
+    id  go to state 178
 
 
 State 140
 
    56 signature: subprogram_type subprogram_id '(' parameters • ')'
 
-    ')'  shift, and go to state 178
+    ')'  shift, and go to state 179
 
 
 State 141
@@ -1908,7 +1915,7 @@ State 142
    63 parameter_list: parameter •
    64               | parameter • ',' parameter_list
 
-    ','  shift, and go to state 179
+    ','  shift, and go to state 180
 
     $default  reduce using rule 63 (parameter_list)
 
@@ -1916,123 +1923,133 @@ State 142
 State 143
 
    20 expression: expression • expression_operator term
-  104 print: PRINT '(' expression • ')'
+  105 print_content: expression •
+  106              | expression • ',' print_content
 
+    ','  shift, and go to state 181
     '+'  shift, and go to state 84
     '-'  shift, and go to state 85
-    ')'  shift, and go to state 180
+
+    $default  reduce using rule 105 (print_content)
 
     expression_operator  go to state 86
 
 
 State 144
 
-  105 read: READ '(' ID • ')'
+  104 print: PRINT '(' print_content • ')'
 
-    ')'  shift, and go to state 181
+    ')'  shift, and go to state 182
 
 
 State 145
 
-  106 read: READ '(' ')' •
+  107 read: READ '(' ID • ')'
 
-    $default  reduce using rule 106 (read)
+    ')'  shift, and go to state 183
 
 
 State 146
 
-  131 for_assignment: TYPE • id '=' expression
+  108 read: READ '(' ')' •
 
-    ID  shift, and go to state 7
-
-    id  go to state 182
+    $default  reduce using rule 108 (read)
 
 
 State 147
 
-  130 for_assignment: id • '=' expression
+  133 for_assignment: TYPE • id '=' expression
 
-    '='  shift, and go to state 183
+    ID  shift, and go to state 7
+
+    id  go to state 184
 
 
 State 148
 
-  128 for_structure: '(' for_expression • ')'
+  132 for_assignment: id • '=' expression
 
-    ')'  shift, and go to state 184
+    '='  shift, and go to state 185
 
 
 State 149
 
-  129 for_expression: for_assignment • ';' evaluation ';' assignment
-
-    ';'  shift, and go to state 185
-
-
-State 150
-
-  127 for: FOR for_structure block •
-
-    $default  reduce using rule 127 (for)
-
-
-State 151
-
-   92 comparison: '(' compare • ')'
+  130 for_structure: '(' for_expression • ')'
 
     ')'  shift, and go to state 186
 
 
+State 150
+
+  131 for_expression: for_assignment • ';' evaluation ';' assignment
+
+    ';'  shift, and go to state 187
+
+
+State 151
+
+  129 for: FOR for_structure block •
+
+    $default  reduce using rule 129 (for)
+
+
 State 152
+
+   92 comparison: '(' compare • ')'
+
+    ')'  shift, and go to state 188
+
+
+State 153
 
    91 comparation: '!' comparison •
 
     $default  reduce using rule 91 (comparation)
 
 
-State 153
+State 154
 
    95 evaluation_operator: EQUAL •
 
     $default  reduce using rule 95 (evaluation_operator)
 
 
-State 154
+State 155
 
    96 evaluation_operator: NOT_EQUAL •
 
     $default  reduce using rule 96 (evaluation_operator)
 
 
-State 155
+State 156
 
    99 evaluation_operator: EQ_GREATER •
 
     $default  reduce using rule 99 (evaluation_operator)
 
 
-State 156
+State 157
 
   100 evaluation_operator: EQ_SMALLER •
 
     $default  reduce using rule 100 (evaluation_operator)
 
 
-State 157
+State 158
 
    97 evaluation_operator: '>' •
 
     $default  reduce using rule 97 (evaluation_operator)
 
 
-State 158
+State 159
 
    98 evaluation_operator: '<' •
 
     $default  reduce using rule 98 (evaluation_operator)
 
 
-State 159
+State 160
 
    94 compare: id evaluation_operator • expression
 
@@ -2045,7 +2062,7 @@ State 159
     '('      shift, and go to state 42
 
     id             go to state 43
-    expression     go to state 187
+    expression     go to state 189
     term           go to state 45
     factor         go to state 46
     base           go to state 47
@@ -2054,35 +2071,35 @@ State 159
     function_call  go to state 50
 
 
-State 160
-
-  126 while: WHILE evaluation block •
-
-    $default  reduce using rule 126 (while)
-
-
 State 161
+
+  128 while: WHILE evaluation block •
+
+    $default  reduce using rule 128 (while)
+
+
+State 162
 
   101 logic_operator: AND •
 
     $default  reduce using rule 101 (logic_operator)
 
 
-State 162
+State 163
 
   102 logic_operator: OR •
 
     $default  reduce using rule 102 (logic_operator)
 
 
-State 163
+State 164
 
   103 logic_operator: EOR •
 
     $default  reduce using rule 103 (logic_operator)
 
 
-State 164
+State 165
 
    89 evaluation: comparation logic_operator • evaluation
 
@@ -2091,27 +2108,27 @@ State 164
     '!'  shift, and go to state 101
 
     id           go to state 102
-    evaluation   go to state 188
+    evaluation   go to state 190
     comparation  go to state 104
     comparison   go to state 105
     compare      go to state 106
 
 
-State 165
-
-  110 if: IF '(' evaluation • ')' block
-
-    ')'  shift, and go to state 189
-
-
 State 166
 
-  117 switch: SWITCH '(' id_value • ')'
+  112 if: IF '(' evaluation • ')' block
 
-    ')'  shift, and go to state 190
+    ')'  shift, and go to state 191
 
 
 State 167
+
+  119 switch: SWITCH '(' id_value • ')'
+
+    ')'  shift, and go to state 192
+
+
+State 168
 
    20 expression: expression • expression_operator term
    81 assignment_operation: assignment_sign expression •
@@ -2124,45 +2141,45 @@ State 167
     expression_operator  go to state 86
 
 
-State 168
+State 169
 
    72 statement_list: statement ';' statement_list •
 
     $default  reduce using rule 72 (statement_list)
 
 
-State 169
+State 170
 
-  114 else_if: ELSE_IF '(' • evaluation ')' block
+  116 else_if: ELSE_IF '(' • evaluation ')' block
 
     ID   shift, and go to state 7
     '('  shift, and go to state 100
     '!'  shift, and go to state 101
 
     id           go to state 102
-    evaluation   go to state 191
+    evaluation   go to state 193
     comparation  go to state 104
     comparison   go to state 105
     compare      go to state 106
 
 
-State 170
-
-  115 else: ELSE block •
-
-    $default  reduce using rule 115 (else)
-
-
 State 171
 
-  112 else_section: else_if else_section •
+  117 else: ELSE block •
 
-    $default  reduce using rule 112 (else_section)
+    $default  reduce using rule 117 (else)
 
 
 State 172
 
-  120 case: CASE • literal ':' body
+  114 else_section: else_if else_section •
+
+    $default  reduce using rule 114 (else_section)
+
+
+State 173
+
+  122 case: CASE • literal ':' body
 
     INT      shift, and go to state 37
     REAL     shift, and go to state 38
@@ -2170,42 +2187,42 @@ State 172
     CHAR     shift, and go to state 40
     STRING   shift, and go to state 41
 
-    literal  go to state 192
-
-
-State 173
-
-  116 switch_case: switch '{' case_section • default_section '}'
-
-    DEFAULT  shift, and go to state 193
-
-    $default  reduce using rule 121 (default_section)
-
-    default_section  go to state 194
-    default          go to state 195
+    literal  go to state 194
 
 
 State 174
 
-  118 case_section: case •
-  119             | case • case_section
+  118 switch_case: switch '{' case_section • default_section '}'
 
-    CASE  shift, and go to state 172
+    DEFAULT  shift, and go to state 195
 
-    $default  reduce using rule 118 (case_section)
+    $default  reduce using rule 123 (default_section)
 
-    case_section  go to state 196
-    case          go to state 174
+    default_section  go to state 196
+    default          go to state 197
 
 
 State 175
+
+  120 case_section: case •
+  121             | case • case_section
+
+    CASE  shift, and go to state 173
+
+    $default  reduce using rule 120 (case_section)
+
+    case_section  go to state 198
+    case          go to state 175
+
+
+State 176
 
    42 function_call: ID '(' arguments ')' •
 
     $default  reduce using rule 42 (function_call)
 
 
-State 176
+State 177
 
    46 arguments_list: argument ',' • arguments_list
 
@@ -2220,58 +2237,37 @@ State 176
     id              go to state 10
     literal         go to state 130
     function_call   go to state 131
-    arguments_list  go to state 197
+    arguments_list  go to state 199
     argument        go to state 134
 
 
-State 177
+State 178
 
    65 parameter: TYPE id •
 
     $default  reduce using rule 65 (parameter)
 
 
-State 178
+State 179
 
    56 signature: subprogram_type subprogram_id '(' parameters ')' •
 
     $default  reduce using rule 56 (signature)
 
 
-State 179
+State 180
 
    64 parameter_list: parameter ',' • parameter_list
 
     TYPE  shift, and go to state 139
 
-    parameter_list  go to state 198
+    parameter_list  go to state 200
     parameter       go to state 142
-
-
-State 180
-
-  104 print: PRINT '(' expression ')' •
-
-    $default  reduce using rule 104 (print)
 
 
 State 181
 
-  105 read: READ '(' ID ')' •
-
-    $default  reduce using rule 105 (read)
-
-
-State 182
-
-  131 for_assignment: TYPE id • '=' expression
-
-    '='  shift, and go to state 199
-
-
-State 183
-
-  130 for_assignment: id '=' • expression
+  106 print_content: expression ',' • print_content
 
     ID       shift, and go to state 36
     INT      shift, and go to state 37
@@ -2282,7 +2278,51 @@ State 183
     '('      shift, and go to state 42
 
     id             go to state 43
-    expression     go to state 200
+    expression     go to state 143
+    term           go to state 45
+    factor         go to state 46
+    base           go to state 47
+    literal        go to state 48
+    id_value       go to state 49
+    function_call  go to state 50
+    print_content  go to state 201
+
+
+State 182
+
+  104 print: PRINT '(' print_content ')' •
+
+    $default  reduce using rule 104 (print)
+
+
+State 183
+
+  107 read: READ '(' ID ')' •
+
+    $default  reduce using rule 107 (read)
+
+
+State 184
+
+  133 for_assignment: TYPE id • '=' expression
+
+    '='  shift, and go to state 202
+
+
+State 185
+
+  132 for_assignment: id '=' • expression
+
+    ID       shift, and go to state 36
+    INT      shift, and go to state 37
+    REAL     shift, and go to state 38
+    BOOLEAN  shift, and go to state 39
+    CHAR     shift, and go to state 40
+    STRING   shift, and go to state 41
+    '('      shift, and go to state 42
+
+    id             go to state 43
+    expression     go to state 203
     term           go to state 45
     factor         go to state 46
     base           go to state 47
@@ -2291,36 +2331,36 @@ State 183
     function_call  go to state 50
 
 
-State 184
+State 186
 
-  128 for_structure: '(' for_expression ')' •
+  130 for_structure: '(' for_expression ')' •
 
-    $default  reduce using rule 128 (for_structure)
+    $default  reduce using rule 130 (for_structure)
 
 
-State 185
+State 187
 
-  129 for_expression: for_assignment ';' • evaluation ';' assignment
+  131 for_expression: for_assignment ';' • evaluation ';' assignment
 
     ID   shift, and go to state 7
     '('  shift, and go to state 100
     '!'  shift, and go to state 101
 
     id           go to state 102
-    evaluation   go to state 201
+    evaluation   go to state 204
     comparation  go to state 104
     comparison   go to state 105
     compare      go to state 106
 
 
-State 186
+State 188
 
    92 comparison: '(' compare ')' •
 
     $default  reduce using rule 92 (comparison)
 
 
-State 187
+State 189
 
    20 expression: expression • expression_operator term
    94 compare: id evaluation_operator expression •
@@ -2333,88 +2373,95 @@ State 187
     expression_operator  go to state 86
 
 
-State 188
+State 190
 
    89 evaluation: comparation logic_operator evaluation •
 
     $default  reduce using rule 89 (evaluation)
 
 
-State 189
+State 191
 
-  110 if: IF '(' evaluation ')' • block
+  112 if: IF '(' evaluation ')' • block
 
     '{'  shift, and go to state 30
 
-    block  go to state 202
-
-
-State 190
-
-  117 switch: SWITCH '(' id_value ')' •
-
-    $default  reduce using rule 117 (switch)
-
-
-State 191
-
-  114 else_if: ELSE_IF '(' evaluation • ')' block
-
-    ')'  shift, and go to state 203
+    block  go to state 205
 
 
 State 192
 
-  120 case: CASE literal • ':' body
+  119 switch: SWITCH '(' id_value ')' •
 
-    ':'  shift, and go to state 204
+    $default  reduce using rule 119 (switch)
 
 
 State 193
 
-  123 default: DEFAULT • ':' body
+  116 else_if: ELSE_IF '(' evaluation • ')' block
 
-    ':'  shift, and go to state 205
+    ')'  shift, and go to state 206
 
 
 State 194
 
-  116 switch_case: switch '{' case_section default_section • '}'
+  122 case: CASE literal • ':' body
 
-    '}'  shift, and go to state 206
+    ':'  shift, and go to state 207
 
 
 State 195
 
-  122 default_section: default •
+  125 default: DEFAULT • ':' body
 
-    $default  reduce using rule 122 (default_section)
+    ':'  shift, and go to state 208
 
 
 State 196
 
-  119 case_section: case case_section •
+  118 switch_case: switch '{' case_section default_section • '}'
 
-    $default  reduce using rule 119 (case_section)
+    '}'  shift, and go to state 209
 
 
 State 197
+
+  124 default_section: default •
+
+    $default  reduce using rule 124 (default_section)
+
+
+State 198
+
+  121 case_section: case case_section •
+
+    $default  reduce using rule 121 (case_section)
+
+
+State 199
 
    46 arguments_list: argument ',' arguments_list •
 
     $default  reduce using rule 46 (arguments_list)
 
 
-State 198
+State 200
 
    64 parameter_list: parameter ',' parameter_list •
 
     $default  reduce using rule 64 (parameter_list)
 
 
-State 199
+State 201
 
-  131 for_assignment: TYPE id '=' • expression
+  106 print_content: expression ',' print_content •
+
+    $default  reduce using rule 106 (print_content)
+
+
+State 202
+
+  133 for_assignment: TYPE id '=' • expression
 
     ID       shift, and go to state 36
     INT      shift, and go to state 37
@@ -2425,7 +2472,7 @@ State 199
     '('      shift, and go to state 42
 
     id             go to state 43
-    expression     go to state 207
+    expression     go to state 210
     term           go to state 45
     factor         go to state 46
     base           go to state 47
@@ -2434,83 +2481,45 @@ State 199
     function_call  go to state 50
 
 
-State 200
+State 203
 
    20 expression: expression • expression_operator term
-  130 for_assignment: id '=' expression •
+  132 for_assignment: id '=' expression •
 
     '+'  shift, and go to state 84
     '-'  shift, and go to state 85
 
-    $default  reduce using rule 130 (for_assignment)
+    $default  reduce using rule 132 (for_assignment)
 
     expression_operator  go to state 86
-
-
-State 201
-
-  129 for_expression: for_assignment ';' evaluation • ';' assignment
-
-    ';'  shift, and go to state 208
-
-
-State 202
-
-  110 if: IF '(' evaluation ')' block •
-
-    $default  reduce using rule 110 (if)
-
-
-State 203
-
-  114 else_if: ELSE_IF '(' evaluation ')' • block
-
-    '{'  shift, and go to state 30
-
-    block  go to state 209
 
 
 State 204
 
-  120 case: CASE literal ':' • body
+  131 for_expression: for_assignment ';' evaluation • ';' assignment
 
-    ID        shift, and go to state 7
-    TYPE      shift, and go to state 1
-    PRINT     shift, and go to state 54
-    READ      shift, and go to state 55
-    CONSTANT  shift, and go to state 2
-    FOR       shift, and go to state 56
-    WHILE     shift, and go to state 57
-    IF        shift, and go to state 58
-    SWITCH    shift, and go to state 59
-    BREAK     shift, and go to state 60
-    RETURN    shift, and go to state 61
-
-    $default  reduce using rule 67 (body)
-
-    declarations_list  go to state 62
-    declaration        go to state 6
-    id                 go to state 63
-    body               go to state 210
-    statement_list     go to state 65
-    statement          go to state 66
-    assignment         go to state 67
-    print              go to state 68
-    read               go to state 69
-    conditional        go to state 70
-    if_else            go to state 71
-    if                 go to state 72
-    switch_case        go to state 73
-    switch             go to state 74
-    loop               go to state 75
-    while              go to state 76
-    for                go to state 77
-    return             go to state 78
+    ';'  shift, and go to state 211
 
 
 State 205
 
-  123 default: DEFAULT ':' • body
+  112 if: IF '(' evaluation ')' block •
+
+    $default  reduce using rule 112 (if)
+
+
+State 206
+
+  116 else_if: ELSE_IF '(' evaluation ')' • block
+
+    '{'  shift, and go to state 30
+
+    block  go to state 212
+
+
+State 207
+
+  122 case: CASE literal ':' • body
 
     ID        shift, and go to state 7
     TYPE      shift, and go to state 1
@@ -2529,7 +2538,7 @@ State 205
     declarations_list  go to state 62
     declaration        go to state 6
     id                 go to state 63
-    body               go to state 211
+    body               go to state 213
     statement_list     go to state 65
     statement          go to state 66
     assignment         go to state 67
@@ -2546,59 +2555,97 @@ State 205
     return             go to state 78
 
 
-State 206
-
-  116 switch_case: switch '{' case_section default_section '}' •
-
-    $default  reduce using rule 116 (switch_case)
-
-
-State 207
-
-   20 expression: expression • expression_operator term
-  131 for_assignment: TYPE id '=' expression •
-
-    '+'  shift, and go to state 84
-    '-'  shift, and go to state 85
-
-    $default  reduce using rule 131 (for_assignment)
-
-    expression_operator  go to state 86
-
-
 State 208
 
-  129 for_expression: for_assignment ';' evaluation ';' • assignment
+  125 default: DEFAULT ':' • body
 
-    ID  shift, and go to state 7
+    ID        shift, and go to state 7
+    TYPE      shift, and go to state 1
+    PRINT     shift, and go to state 54
+    READ      shift, and go to state 55
+    CONSTANT  shift, and go to state 2
+    FOR       shift, and go to state 56
+    WHILE     shift, and go to state 57
+    IF        shift, and go to state 58
+    SWITCH    shift, and go to state 59
+    BREAK     shift, and go to state 60
+    RETURN    shift, and go to state 61
 
-    id          go to state 63
-    assignment  go to state 212
+    $default  reduce using rule 67 (body)
+
+    declarations_list  go to state 62
+    declaration        go to state 6
+    id                 go to state 63
+    body               go to state 214
+    statement_list     go to state 65
+    statement          go to state 66
+    assignment         go to state 67
+    print              go to state 68
+    read               go to state 69
+    conditional        go to state 70
+    if_else            go to state 71
+    if                 go to state 72
+    switch_case        go to state 73
+    switch             go to state 74
+    loop               go to state 75
+    while              go to state 76
+    for                go to state 77
+    return             go to state 78
 
 
 State 209
 
-  114 else_if: ELSE_IF '(' evaluation ')' block •
+  118 switch_case: switch '{' case_section default_section '}' •
 
-    $default  reduce using rule 114 (else_if)
+    $default  reduce using rule 118 (switch_case)
 
 
 State 210
 
-  120 case: CASE literal ':' body •
+   20 expression: expression • expression_operator term
+  133 for_assignment: TYPE id '=' expression •
 
-    $default  reduce using rule 120 (case)
+    '+'  shift, and go to state 84
+    '-'  shift, and go to state 85
+
+    $default  reduce using rule 133 (for_assignment)
+
+    expression_operator  go to state 86
 
 
 State 211
 
-  123 default: DEFAULT ':' body •
+  131 for_expression: for_assignment ';' evaluation ';' • assignment
 
-    $default  reduce using rule 123 (default)
+    ID  shift, and go to state 7
+
+    id          go to state 63
+    assignment  go to state 215
 
 
 State 212
 
-  129 for_expression: for_assignment ';' evaluation ';' assignment •
+  116 else_if: ELSE_IF '(' evaluation ')' block •
 
-    $default  reduce using rule 129 (for_expression)
+    $default  reduce using rule 116 (else_if)
+
+
+State 213
+
+  122 case: CASE literal ':' body •
+
+    $default  reduce using rule 122 (case)
+
+
+State 214
+
+  125 default: DEFAULT ':' body •
+
+    $default  reduce using rule 125 (default)
+
+
+State 215
+
+  131 for_expression: for_assignment ';' evaluation ';' assignment •
+
+    $default  reduce using rule 131 (for_expression)
