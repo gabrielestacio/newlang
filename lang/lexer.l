@@ -30,7 +30,7 @@
 "return"                                   {return RETURN;}
 ("fun"|"function")                         {return FUNCTION;}
 "print"                                    {yylval.sValue = strdup(yytext); return PRINT;}
-"read"                                    {yylval.sValue = strdup(yytext); return READ;}
+"read"                                     {yylval.sValue = strdup(yytext); return READ;}
 "{"                                        {return yytext[0];}
 "}"                                        {return yytext[0];}
 "("                                        {return yytext[0];}

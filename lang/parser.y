@@ -63,7 +63,7 @@ char * convert(char * type);
 
 %type <rec> declarations_section declarations_list declaration id_list id_declaration id dimensions dimensions_novalue dimensions_value
 %type <rec> expression expression_operator term term_operator factor base id_value literal double_sign function_call arguments arguments_list argument
-%type <rec> subprograms_section subprogram subprogram_type subprogram_id signature parameters parameter_list parameter statement_list statement return
+%type <rec> subprograms_section subprogram subprogram_type subprogram_id subprogram_main signature parameters parameter_list parameter statement_list statement return
 %type <rec> block body header
 %type <rec> print print_content read
 %type <rec> assignment assignment_operation assignment_sign
@@ -75,25 +75,26 @@ char * convert(char * type);
 
 %%
 
-program : declarations_section subprograms_section								{fprintf(yyout, "%s\n%s", $1->code, $2->code);
-																				freeRecord($1);
-																				freeRecord($2);}	
-		;
+program : declarations_section subprograms_section	{fprintf(yyout, "%s\n%s", $1->code, $2->code);
+																										freeRecord($1);
+																										freeRecord($2);}	
+				| subprograms_section												{fprintf(yyout, "%s", $1->code);
+																										freeRecord($1);}
+				;
 
-declarations_section :  														{$$ = createRecord("","");}
-         	 		 | declarations_list										{$$ = $1;}
-		 	 		 ;
+declarations_section :	declarations_list	{$$ = $1;}
+		 	 		 					;
 
-declarations_list : declaration ';'												{char * s = cat($1->code, ";\n", "", "", "");
-																				freeRecord($1);
-																				$$ = createRecord(s, "");
-																				free(s);}
-          	 	  | declaration ';' declarations_list							{char * s = cat($1->code, ";\n", $3->code, "", "");
-																				freeRecord($1);
-																				freeRecord($3);
-																				$$ = createRecord(s, "");
-																				free(s);}
-		     	  ;
+declarations_list : declaration ';'									{char * s = cat($1->code, ";\n", "", "", "");
+																										freeRecord($1);
+																										$$ = createRecord(s, "");
+																										free(s);}
+          		 	  | declaration ';' declarations_list	{char * s = cat($1->code, ";\n", $3->code, "", "");
+																										freeRecord($1);
+																										freeRecord($3);
+																										$$ = createRecord(s, "");
+																										free(s);}
+		     	  			;
 
 declaration: TYPE id_list														{char * s = cat(convert($1), " ", $2->code, "", "");
 																				record * rec = createRecord($2->code, $1);
@@ -300,37 +301,43 @@ header : FUNCTION signature														{char * s = cat($2->code, "", "", "", "
 																				free(s);}
 	   ;
 
-signature : subprogram_type subprogram_id '(' parameters ')'					{char * s = cat($1->code, $2->code, "(", $4->code, ")");
-																				record * rec = createRecord($2->code, $1->type);
-																				insert_record(SYMBOLS, rec);
-																				freeRecord($2);
-																				freeRecord($4);
-																				$$ = createRecord(s, $1->type);
-																				freeRecord($1);
-																				free(s);}
-		  ;
+signature : subprogram_type subprogram_id '(' parameters ')'	{char * s = cat($1->code, $2->code, "(", $4->code, ")");
+																															record * rec = createRecord($2->code, $1->type);
+																															insert_record(SYMBOLS, rec);
+																															freeRecord($2);
+																															freeRecord($4);
+																															$$ = createRecord(s, $1->type);
+																															freeRecord($1);
+																															free(s);}
+		  		| subprogram_main '(' ')'														{char * s = cat($1->code, "()", "", "", "");
+																															freeRecord($1);
+																															$$ = createRecord(s, "void");
+																															free(s);}
+					;
 
-subprogram_type : TYPE 															{$$ = createRecord(convert($1), $1);
-																				free($1);}
-		  		| VOID 															{$$ = createRecord("void", "void");}
-		  		;
+subprogram_type : TYPE	{$$ = createRecord(convert($1), $1);
+												free($1);}
+		  					| VOID	{$$ = createRecord("void", "void");}
+		  					;
 
-subprogram_id : ID																{record * rec = search_record(SYMBOLS, $1);
-																				$$ = createRecord($1, rec->type);}
-			  | MAIN_FUN														{$$ = createRecord("main", "void");}
-			  ;
+subprogram_main :  MAIN_FUN	{$$ = createRecord("main", "void");}
+								;
+
+subprogram_id : ID	{record * rec = search_record(SYMBOLS, $1);
+										$$ = createRecord($1, rec->type);}
+							;
 
 parameters : 																	{$$ = createRecord("","");}
-	   	   | parameter_list 													{$$ = $1;}
-	       ;
+	   	  		| parameter_list 													{$$ = $1;}
+	       		;
 
 parameter_list : parameter 														{$$ = $1;}
-		       | parameter ',' parameter_list 									{char * s = cat($1->code, ",", $3->code, "", "");
+		       		| parameter ',' parameter_list 									{char * s = cat($1->code, ",", $3->code, "", "");
 																				freeRecord($1);
 																				freeRecord($3);
 																				$$ = createRecord(s, "");
 																				free(s);}
-		       ;
+		       		;
 
 parameter : TYPE id 															{char * s = cat(convert($1), $2->code, "", "", "");
 																				record * rec = createRecord($2->code, convert($1));
@@ -706,23 +713,23 @@ char * cat(char * s1, char * s2, char * s3, char * s4, char * s5){
 }
 
 char * convert(char * type){
-	if (strcmp(type, "string")) {
+	if (strcmp(type, "string") != 0) {
 		char * output = "string";
 		return output;
 	};
-	if (strcmp(type, "int")) {
+	if (strcmp(type, "int") != 0) {
 		char * output = "int";
 		return output;
 	};
-	if (strcmp(type, "char")) {
+	if (strcmp(type, "char") != 0) {
 		char * output = "char";
 		return output;
 	};
-	if (strcmp(type, "boolean")) {
+	if (strcmp(type, "boolean") != 0) {
 		char * output = "bool";
 		return output;
 	};
-	if (strcmp(type, "real")) {
+	if (strcmp(type, "real") != 0) {
 		char * output = "float";
 		return output;
 	};
