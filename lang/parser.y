@@ -175,7 +175,6 @@ expression : expression expression_operator expression	{char * s = cat($1->code,
 																												freeRecord($3);
 																												$$ = createRecord(s, t);
 																												free(s);}
-						| id	 																			{$$ = $1;}
 						| term 																			{$$ = $1;}
 						;
 
