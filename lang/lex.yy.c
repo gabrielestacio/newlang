@@ -952,12 +952,12 @@ YY_RULE_SETUP
 case 23:
 YY_RULE_SETUP
 #line 32 "lexer.l"
-{yylval.sValue = strdup(yytext); return PRINT;}
+{return PRINT;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
 #line 33 "lexer.l"
-{yylval.sValue = strdup(yytext); return READ;}
+{return READ;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
