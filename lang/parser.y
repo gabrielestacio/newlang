@@ -116,14 +116,18 @@ id_declaration	: id 								{$$ = $1;}
 			  				| id '=' expression	{char * s = cat($1->code, "=", $3->code, "", "");
 																		free_Record($1);
 																		free_Record($3);
-																		$$ = create_Record(s, $3->type);
+																		record * rec = create_Record(s, $3->type);
+																		$$ = rec;
+																		insert_record(SYMBOLS, rec);
 																		free(s);}
 			  				;
 
 id : ID dimensions	{char * s = cat($1, " ", $2->code, "", "");
 										free($1);
 										free_Record($2);
-										$$ = create_Record(s, "");
+										record * rec = create_Record(s, "");
+										$$ = rec;
+										insert_record(SYMBOLS, rec);
 										free(s);}
    ;
 
@@ -464,23 +468,26 @@ logic_operator : AND 	{$$ = create_Record("&&", "");}
 
 //Não tá funcionando
 print : PRINT '(' print_content ')'	{char * s;
-																		if(strcmp($3->type, "string") == 0){
-																			s = cat("printf(\"%s\",", "&", $3->code, ")", "");
+																		record * rec = search_record(s, $3->code);
+																		if(strcmp(rec->type, "string") == 0){
+																			s = cat("printf(\"%s\",", "&", rec->code, ")", "");
 																			$$ = create_Record(s, "string");
-																		} else if(strcmp($3->type, "int") == 0){
-																			s = cat("printf(\"%d\",", "&", $3->code, ")", "");
+																		} else if(strcmp(rec->type, "int") == 0){
+																			s = cat("printf(\"%d\",", "&", rec->code, ")", "");
 																			$$ = create_Record(s, "int");
-																		} else if(strcmp($3->type, "real") == 0){
-																			s = cat("printf(\"%f\",", "&", $3->code, ")", "");
+																		} else if(strcmp(rec->type, "real") == 0){
+																			s = cat("printf(\"%f\",", "&", rec->code, ")", "");
 																			$$ = create_Record(s, "real");
-																		} else if(strcmp($3->type, "char") == 0){
-																			s = cat("printf(\"%c\",", "&", $3->code, ")", "");
+																		} else if(strcmp(rec->type, "char") == 0){
+																			s = cat("printf(\"%c\",", "&", rec->code, ")", "");
 																			$$ = create_Record(s, "char");
 																		} else{
-																			s = cat("printf(\"%f\",", "&", $3->code, ")", "");
+																			s = cat("printf(\"%f\",", "&", rec->code, ")", "");
 																			$$ = create_Record(s, "float");
 																		}
-																		free_Record($3);}
+																		free_Record(rec);
+																		free_Record($3);
+																		}
 	  	;
 
 print_content : expression										{$$ = $1;}
