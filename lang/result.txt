@@ -1,0 +1,7 @@
+main(){float x =21.0;
+float y =2.3;
+int c =5;
+float res ;
+res =y +c ;
+printf(res );
+}
