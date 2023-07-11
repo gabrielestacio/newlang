@@ -463,10 +463,24 @@ logic_operator : AND 	{$$ = create_Record("&&", "");}
 								;
 
 //Não tá funcionando
-print : PRINT '(' print_content ')'	{char * s = cat("printf(", $3->code, ")", "", "");
-																		free_Record($3);
-																		$$ = create_Record(s, "");
-																		free(s);}
+print : PRINT '(' print_content ')'	{char * s;
+																		if(strcmp($3->type, "string") == 0){
+																			s = cat("printf(\"%s\",", "&", $3->code, ")", "");
+																			$$ = create_Record(s, "string");
+																		} else if(strcmp($3->type, "int") == 0){
+																			s = cat("printf(\"%d\",", "&", $3->code, ")", "");
+																			$$ = create_Record(s, "int");
+																		} else if(strcmp($3->type, "real") == 0){
+																			s = cat("printf(\"%f\",", "&", $3->code, ")", "");
+																			$$ = create_Record(s, "real");
+																		} else if(strcmp($3->type, "char") == 0){
+																			s = cat("printf(\"%c\",", "&", $3->code, ")", "");
+																			$$ = create_Record(s, "char");
+																		} else{
+																			s = cat("printf(\"%f\",", "&", $3->code, ")", "");
+																			$$ = create_Record(s, "float");
+																		}
+																		free_Record($3);}
 	  	;
 
 print_content : expression										{$$ = $1;}

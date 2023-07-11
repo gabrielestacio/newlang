@@ -1,10 +1,15 @@
 function main () {
-    real x = 21.0;
-    real y = 2.3;
-    int c = 5;
+    real x = 1.0;
+    real y = 5.0;
+    int c = 2;
     real res;
+    real res2;
+    real res3;
 
-    res = x**2 - y + c;
+    res = x**2;
 
-    print(res);
+    res2 = res - y;
+    res3 = res2 + c;
+
+    print(res3);
 }

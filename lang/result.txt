@@ -1,7 +1,11 @@
-main(){float x =21.0;
-float y =2.3;
-int c =5;
+main(){float x =1.0;
+float y =5.0;
+int c =2;
 float res ;
-res =y +c ;
-printf(res );
+float res2 ;
+float res3 ;
+res =pow(x ,2);
+res2 =res -y ;
+res3 =res2 +c ;
+printf("%f",&res3 );
 }
