@@ -117,7 +117,7 @@ id_list : id_declaration							{$$ = $1;}
 																			free(s);}
 	    	;
 
-id_declaration: id 									{$$ = $1;}
+id_declaration	: id 								{$$ = $1;}
 			  				| id '=' expression	{char * s = cat($1->code, "=", $3->code, "", "");
 																		freeRecord($1);
 																		freeRecord($3);
@@ -137,11 +137,11 @@ dimensions :	{$$ = createRecord("","");}
 					| 	dimensions_value		{$$ = $1;}
 					;
 
-dimensions_novalue : '[' ']'  						{$$ = createRecord("[]", "");}
-		   		   | '[' ']' dimensions_novalue	{char * s = cat("[]", $3->code, "", "", "");
-																					freeRecord($3);
-																					$$ = createRecord(s, "");}
-		           ;
+dimensions_novalue : '[' ']'  									{$$ = createRecord("[]", "");}
+		   		   			| '[' ']' dimensions_novalue	{char * s = cat("[]", $3->code, "", "", "");
+																								freeRecord($3);
+																								$$ = createRecord(s, "");}
+		           		;
 
 dimensions_value : '[' INT ']'  									{char * s = cat("[", $2, "]", "", "");
 																									free($2);
@@ -288,7 +288,7 @@ subprogram : header block {char * s = cat($1->code, $2->code, "", "", "");
 	      		;
 
 header : FUNCTION signature	{$$ = $2;}
-	   		;
+			;
 
 signature : subprogram_type subprogram_id '(' parameters ')'	{char * s = cat($1->code, $2->code, "(", $4->code, ")");
 																															record * rec = createRecord($2->code, $1->type);
@@ -320,8 +320,8 @@ subprogram_id : ID	{record * rec = search_record(SYMBOLS, $1);
 										}}
 							;
 
-parameters : 																	{$$ = createRecord("","");}
-	   	  		| parameter_list 													{$$ = $1;}
+parameters : 									{$$ = createRecord("","");}
+	   	  		| parameter_list	{$$ = $1;}
 	       		;
 
 parameter_list : parameter 										{$$ = $1;}
@@ -405,19 +405,19 @@ assignment_operation : assignment_sign expression	{char * s = cat($1->code, $2->
 		   			 				| double_sign 								{$$ = $1;}
 		   			 				;
 
-assignment_sign : '=' 	{$$ = createRecord("=", "");}
-				| PLUS_ASSIGN		{$$ = createRecord("+=", "");}
-				| MINUS_ASSIGN	{$$ = createRecord("-=", "");}
-				| DIV_ASSIGN 		{$$ = createRecord("/=", "");}
-				| TIMES_ASSIGN 	{$$ = createRecord("*=", "");}
-				;
+assignment_sign : '=' 					{$$ = createRecord("=", "");}
+								| PLUS_ASSIGN		{$$ = createRecord("+=", "");}
+								| MINUS_ASSIGN	{$$ = createRecord("-=", "");}
+								| DIV_ASSIGN 		{$$ = createRecord("/=", "");}
+								| TIMES_ASSIGN 	{$$ = createRecord("*=", "");}
+								;
 
 evaluation : comparation													{$$ = $1;}
 					| comparation logic_operator evaluation	{char * s = cat($1->code, $2->code, $3->code, "", "");
+																									$$ = createRecord(s, $1->type);
 																									freeRecord($1);
 																									freeRecord($2);
 																									freeRecord($3);
-																									$$ = createRecord(s, $1->type);
 																									free(s);}
 					;
 
@@ -435,23 +435,23 @@ comparison : '(' compare ')'	{char * s = cat("(", $2->code, ")", "", "");
 					| compare						{$$ = $1;}
 					;
 
-compare : id evaluation_operator expression	{char * s = cat($1->code, $2->code, $3->code, "", "");
-																						char * t;
-																						if(strcmp($1->type, $3->type) != 0){
-																							if((strcmp($1->type, "int") == 0 && strcmp($3->type, "real") == 0) || (strcmp($3->type, "int") == 0 && strcmp($1->type, "real") == 0)){
-																								t = "real";
-																							}
-																							else{
-																								return yyerror("Compare error: type mismatch");
-																							}
-																						} else{
-																							t = $1->type;
-																						}
-																						freeRecord($1);
-																						freeRecord($2);
-																						freeRecord($3);
-																						$$ = createRecord(s, "boolean");
-																						free(s);}
+compare : expression evaluation_operator expression	{char * s = cat($1->code, $2->code, $3->code, "", "");
+																										char * t;
+																										if(strcmp($1->type, $3->type) != 0){
+																											if((strcmp($1->type, "int") == 0 && strcmp($3->type, "real") == 0) || (strcmp($3->type, "int") == 0 && strcmp($1->type, "real") == 0)){
+																												t = "real";
+																											}
+																											else{
+																												return yyerror("Compare error: type mismatch");
+																											}
+																										} else{
+																											t = $1->type;
+																										}
+																										freeRecord($1);
+																										freeRecord($2);
+																										freeRecord($3);
+																										$$ = createRecord(s, "boolean");
+																										free(s);}
 				;
 
 evaluation_operator : EQUAL				{$$ = createRecord("==", "");}
