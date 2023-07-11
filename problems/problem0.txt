@@ -1,0 +1,8 @@
+fun int mdc(int n, int m2) {
+    int p = 0;
+}
+function main(){
+    int m = 0;
+    int r = 1;
+    print("Digite o valor de n: ");
+}

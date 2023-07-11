@@ -60,7 +60,7 @@ char * convert(char * type);
 %token PLUS_ASSIGN MINUS_ASSIGN DIV_ASSIGN TIMES_ASSIGN DOUBLE_PLUS DOUBLE_MINUS POWER
 %token AND OR EOR EQUAL NOT_EQUAL EQ_GREATER EQ_SMALLER
 
-%type <rec> declarations_section declarations_list declaration id_list id_declaration id dimensions dimensions_novalue dimensions_value
+%type <rec> declarations_list declaration id_list id_declaration id dimensions dimensions_novalue dimensions_value
 %type <rec> expression expression_operator term term_operator factor base id_value literal double_sign function_call arguments arguments_list argument
 %type <rec> subprograms_section subprogram subprogram_type subprogram_id subprogram_main signature parameters parameter_list parameter statement_list statement return
 %type <rec> block body header
@@ -74,15 +74,12 @@ char * convert(char * type);
 
 %%
 
-program : declarations_section subprograms_section	{fprintf(yyout, "%s\n%s", $1->code, $2->code);
-																										freeRecord($1);
-																										freeRecord($2);}	
-				| subprograms_section												{fprintf(yyout, "%s", $1->code);
-																										freeRecord($1);}
+program : declarations_list subprograms_section	{fprintf(yyout, "%s\n%s", $1->code, $2->code);
+																								freeRecord($1);
+																								freeRecord($2);}	
+				| subprograms_section										{fprintf(yyout, "%s", $1->code);
+																								freeRecord($1);}
 				;
-
-declarations_section :	declarations_list	{$$ = $1;}
-		 	 		 					;
 
 declarations_list : declaration ';'										{char * s = cat($1->code, ";\n", "", "", "");
 																											freeRecord($1);
@@ -120,7 +117,6 @@ id_list : id_declaration							{$$ = $1;}
 																			free(s);}
 	    	;
 
-//Como fazer a verificação de tipos aqui?
 id_declaration: id 									{$$ = $1;}
 			  				| id '=' expression	{char * s = cat($1->code, "=", $3->code, "", "");
 																		freeRecord($1);
@@ -129,7 +125,6 @@ id_declaration: id 									{$$ = $1;}
 																		free(s);}
 			  				;
 
-//Como fazer a verificação de tipos aqui?
 id : ID dimensions	{char * s = cat($1, " ", $2->code, "", "");
 										free($1);
 										freeRecord($2);
@@ -150,15 +145,15 @@ dimensions_novalue : '[' ']'  						{$$ = createRecord("[]", "");}
 
 dimensions_value : '[' INT ']'  									{char * s = cat("[", $2, "]", "", "");
 																									free($2);
-																									$$ = createRecord(s, "");}
+																									$$ = createRecord(s, "");
+																									free(s);}
 			     				| '[' INT ']' dimensions_value	{char * s = cat("[", $2, "]", $4->code, "");
 																									free($2);
 																									freeRecord($4);
-																									$$ = createRecord(s, "");}
+																									$$ = createRecord(s, "");
+																									free(s);}
 			     				;
 
-//Recursão à esquerda permitida
-//Verificação de tipos
 expression : expression expression_operator expression	{char * s = cat($1->code, $2->code, $3->code, "", "");
 																												char * t;
 																												if(strcmp($1->type, $3->type) != 0){
@@ -182,8 +177,6 @@ expression_operator : '+'	{$$ = createRecord("+", "");}
 	 									| '-' {$$ = createRecord("-", "");}
 	  								;
 
-//Recursão à esquerda permitida
-//Verificação de tipos
 term : term term_operator factor	{char * s = cat($1->code, $2->code, $3->code, "", "");
 																	char * t;
 																	if(strcmp($1->type, $3->type) != 0){
@@ -209,7 +202,6 @@ term_operator : '*'	{$$ = createRecord("*", "");}
 							| '%'	{$$ = createRecord("%", "");}
 							;
 
-//Verificação de tipos
 factor : base POWER factor	{char * s = cat("pow(", $1->code, ",", $3->code, ")");
 														freeRecord($3);
 														$$ = createRecord(s, $1->type);
@@ -223,6 +215,7 @@ base : '(' expression ')'		{char * s = cat("(", $2->code, ")", "", "");
 														freeRecord($2);
 														free(s);}
 		| literal 							{$$ = $1;}
+		| id			 							{$$ = $1;}
 		| id_value 							{$$ = $1;}
 		| id_value double_sign	{char * s = cat($1->code, $2->code, "", "", "");
 														freeRecord($2);
@@ -257,60 +250,57 @@ function_call : ID '(' arguments ')'	{char * s = cat($1, "(", $3->code, ")", "")
 																			free(s);}
 		      		;
 
-arguments : 																	{$$ = createRecord("","");}
-	 	  | arguments_list														{$$ = $1;} 	
-	 	  ;
+arguments : 								{$$ = createRecord("","");}
+					| arguments_list	{$$ = $1;} 	
+					;
 
-arguments_list : argument 														{$$ = $1;}
-		  	   | argument ',' arguments_list 									{char * s = cat($1->code, ",", $3->code, "", "");
-																				freeRecord($3);
-																				freeRecord($1);
-																				$$ = createRecord(s, "");
-																				free(s);}
-		  	   ;
+arguments_list : argument 										{$$ = $1;}
+								| argument ',' arguments_list	{char * s = cat($1->code, ",", $3->code, "", "");
+																							freeRecord($3);
+																							freeRecord($1);
+																							$$ = createRecord(s, "");
+																							free(s);}
+		  	   			;
 
-argument : id_declaration														{record * rec = search_record(SYMBOLS, $1->code);
-																				$$ = createRecord($1->code, rec->type);}
-		 | literal 																{$$ = $1;}
-		 | function_call														{$$ = $1;}
-		 ;
+argument : id_declaration	{record * rec = search_record(SYMBOLS, $1->code);
+													$$ = createRecord($1->code, rec->type);}
+		 		| literal 				{$$ = $1;}
+		 		| function_call		{$$ = $1;}
+		 		;
 
-double_sign : DOUBLE_PLUS 														{$$ = createRecord("++", "");}
-			| DOUBLE_MINUS 														{$$ = createRecord("--", "");}
+double_sign : DOUBLE_PLUS	{$$ = createRecord("++", "");}
+			| DOUBLE_MINUS			{$$ = createRecord("--", "");}
 			;
 
-subprograms_section : subprogram 												{$$ = $1;}
-				    | subprogram subprograms_section 							{char * s = cat($1->code, $2->code, "", "", "");
-																				freeRecord($1);
-																				freeRecord($2);
-																				$$ = createRecord(s, "");
-																				free(s);}
-	  				;
+subprograms_section : subprogram 											{$$ = $1;}
+										| subprogram subprograms_section	{char * s = cat($1->code, $2->code, "", "", "");
+																											freeRecord($1);
+																											freeRecord($2);
+																											$$ = createRecord(s, "");
+																											free(s);}
+	  								;
 
-subprogram : header block 														{char * s = cat($1->code, $2->code, "", "", "");
-																				freeRecord($1);
-																				$$ = createRecord(s, $2->type);
-																				freeRecord($2);
-																				free(s);}
-	       ;
+subprogram : header block {char * s = cat($1->code, $2->code, "", "", "");
+													freeRecord($1);
+													$$ = createRecord(s, $2->type);
+													freeRecord($2);
+													free(s);}
+	      		;
 
-header : FUNCTION signature														{char * s = cat($2->code, "", "", "", "");
-																				$$ = createRecord(s, $2->type);
-																				freeRecord($2);
-																				free(s);}
-	   ;
+header : FUNCTION signature	{$$ = $2;}
+	   		;
 
 signature : subprogram_type subprogram_id '(' parameters ')'	{char * s = cat($1->code, $2->code, "(", $4->code, ")");
 																															record * rec = createRecord($2->code, $1->type);
 																															insert_record(SYMBOLS, rec);
+																															$$ = createRecord(s, $1->type);
 																															freeRecord($2);
 																															freeRecord($4);
-																															$$ = createRecord(s, $1->type);
 																															freeRecord($1);
 																															free(s);}
 		  		| subprogram_main '(' ')'														{char * s = cat($1->code, "()", "", "", "");
-																															freeRecord($1);
 																															$$ = createRecord(s, "void");
+																															freeRecord($1);
 																															free(s);}
 					;
 
@@ -323,19 +313,23 @@ subprogram_main :  MAIN_FUN	{$$ = createRecord("main", "void");}
 								;
 
 subprogram_id : ID	{record * rec = search_record(SYMBOLS, $1);
-										$$ = createRecord($1, rec->type);}
+										if(rec != NULL){
+											$$ = createRecord($1, "");
+										} else {
+											$$ = createRecord($1, rec->type);
+										}}
 							;
 
 parameters : 																	{$$ = createRecord("","");}
 	   	  		| parameter_list 													{$$ = $1;}
 	       		;
 
-parameter_list : parameter 														{$$ = $1;}
-		       		| parameter ',' parameter_list 									{char * s = cat($1->code, ",", $3->code, "", "");
-																				freeRecord($1);
-																				freeRecord($3);
-																				$$ = createRecord(s, "");
-																				free(s);}
+parameter_list : parameter 										{$$ = $1;}
+		       		| parameter ',' parameter_list	{char * s = cat($1->code, ",", $3->code, "", "");
+																							freeRecord($1);
+																							freeRecord($3);
+																							$$ = createRecord(s, "");
+																							free(s);}
 		       		;
 
 parameter : TYPE id	{char * s = cat(convert($1), $2->code, "", "", "");
@@ -353,8 +347,8 @@ block : '{' body '}'	{char * s = cat("{", $2->code, "}", "", "");
 											free(s);}
 	  ;
 
-body : 																{$$ = createRecord("","");}
-		| declarations_list								{$$ = $1;}
+body : 																	{$$ = createRecord("","");}
+		| declarations_list									{$$ = $1;}
 		| declarations_list statement_list	{char * s = cat($1->code, $2->code, "", "", "");
 																				freeRecord($1);
 																				freeRecord($2);
@@ -363,15 +357,15 @@ body : 																{$$ = createRecord("","");}
 		| statement_list										{$$ = $1;}
 		;
 
-statement_list : statement ';'													{char * s = cat($1->code, ";\n", "", "", "");
-																				freeRecord($1);
-																				$$ = createRecord(s, "");
-																				free(s);}
-	    	   | statement ';' statement_list 									{char * s = cat($1->code, ";\n", $3->code, "", "");
-																				freeRecord($1);
-																				freeRecord($3);
-																				$$ = createRecord(s, "");
-																				free(s);}
+statement_list : statement ';'						{char * s = cat($1->code, ";\n", "", "", "");
+																					freeRecord($1);
+																					$$ = createRecord(s, "");
+																					free(s);}
+	    	   | statement ';' statement_list	{char * s = cat($1->code, ";\n", $3->code, "", "");
+																					freeRecord($1);
+																					freeRecord($3);
+																					$$ = createRecord(s, "");
+																					free(s);}
 		       ;
 
 statement : assignment 	{$$ = $1;}
@@ -383,33 +377,33 @@ statement : assignment 	{$$ = $1;}
 					| BREAK				{$$ = createRecord("break", "");}
 					;
 
-assignment : id assignment_operation											{char * s = cat($1->code, $2->code, "", "", "");
-																				char * t;
-																				if(strcmp($1->type, $2->type) != 0){
-																					if((strcmp($1->type, "int") == 0 && strcmp($2->type, "real") == 0) || (strcmp($2->type, "int") == 0 && strcmp($1->type, "real") == 0)){
-																						t = "real";
-																					}
-																					else if(strcmp($1->type, "") == 0){
-																						t = $2->type;
-																					} else{
-																						return yyerror("Assignment error: type mismatch");
-																					}
-																				} else{
-																					t = $1->type;
+assignment : id assignment_operation	{char * s = cat($1->code, $2->code, "", "", "");
+																			char * t;
+																			if(strcmp($1->type, $2->type) != 0){
+																				if((strcmp($1->type, "int") == 0 && strcmp($2->type, "real") == 0) || (strcmp($2->type, "int") == 0 && strcmp($1->type, "real") == 0)){
+																					t = "real";
 																				}
-																				freeRecord($1);
-																				freeRecord($2);
-																				$$ = createRecord(s, t);
-																				free(s);}
-		   ;
+																				else if(strcmp($1->type, "") == 0){
+																					t = $2->type;
+																				} else{
+																					return yyerror("Assignment error: type mismatch");
+																				}
+																			} else{
+																				t = $1->type;
+																			}
+																			freeRecord($1);
+																			freeRecord($2);
+																			$$ = createRecord(s, t);
+																			free(s);}
+		   			;
 
-assignment_operation : assignment_sign expression 								{char * s = cat($1->code, $2->code, "", "", "");
-																				freeRecord($1);
-																				$$ = createRecord(s, $2->type);
-																				freeRecord($2);
-																				free(s);}
-		   			 | double_sign 												{$$ = $1;}
-		   			 ;
+assignment_operation : assignment_sign expression	{char * s = cat($1->code, $2->code, "", "", "");
+																									freeRecord($1);
+																									$$ = createRecord(s, $2->type);
+																									freeRecord($2);
+																									free(s);}
+		   			 				| double_sign 								{$$ = $1;}
+		   			 				;
 
 assignment_sign : '=' 	{$$ = createRecord("=", "");}
 				| PLUS_ASSIGN		{$$ = createRecord("+=", "");}
@@ -488,7 +482,6 @@ print_content : expression										{$$ = $1;}
 																							free(s);}
 							;
 
-//Tem que ver a questão dos tipos
 read : READ '(' ID ')'	{record * rec = search_record(SYMBOLS, $3);
 												char * s;
 												if(rec->type == "string"){
@@ -530,40 +523,40 @@ if : IF '(' evaluation ')' block	{char * s = cat("if ", "(", $3->code, ")", $5->
 																	free(s);}
    ;
 
-else_section :  																{$$ = createRecord("","");}
-			 | else_if else_section												{char * s = cat($1->code, $2->code, "", "", "");
-																				freeRecord($1);
-																				freeRecord($2);
-																				$$ = createRecord(s, "");
-																				free(s);}
-			 | else 															{$$ = $1;}
-			 ;
+else_section :  										{$$ = createRecord("","");}
+						| else_if else_section	{char * s = cat($1->code, $2->code, "", "", "");
+																		freeRecord($1);
+																		freeRecord($2);
+																		$$ = createRecord(s, "");
+																		free(s);}
+						| else 									{$$ = $1;}
+						;
 
-else_if : ELSE_IF '(' evaluation ')' block										{char * s = cat("else if ", "(", $3->code, ")", $5->code);
-																				freeRecord($3);
-																				freeRecord($5);
-																				$$ = createRecord(s, "");
-																				free(s);}
-		;
+else_if : ELSE_IF '(' evaluation ')' block	{char * s = cat("else if ", "(", $3->code, ")", $5->code);
+																						freeRecord($3);
+																						freeRecord($5);
+																						$$ = createRecord(s, "");
+																						free(s);}
+				;
 
-else : ELSE block																{char * s = cat("else ", $2->code, "", "", "");
-																				freeRecord($2);
-																				$$ = createRecord(s, "");
-																				free(s);}
-	 ;
+else : ELSE block	{char * s = cat("else ", $2->code, "", "", "");
+									freeRecord($2);
+									$$ = createRecord(s, "");
+									free(s);}
+	 	;
 
-switch_case : switch '{' case_section default_section '}' 						{char * s = cat($1->code, "{", $3->code, $4->code, "}");
-																				freeRecord($1);
-																				freeRecord($3);
-																				freeRecord($4);
-																				$$ = createRecord(s, "");
-																				free(s);}
-			;
+switch_case : switch '{' case_section default_section '}'	{char * s = cat($1->code, "{", $3->code, $4->code, "}");
+																													freeRecord($1);
+																													freeRecord($3);
+																													freeRecord($4);
+																													$$ = createRecord(s, "");
+																													free(s);}
+						;
 
-switch : SWITCH '(' id_value ')'												{char * s = cat("switch ", "(", $3->code, ")", "");
-																				freeRecord($3);
-																				$$ = createRecord(s, "");
-																				free(s);}
+switch : SWITCH '(' id_value ')'	{char * s = cat("switch ", "(", $3->code, ")", "");
+																	freeRecord($3);
+																	$$ = createRecord(s, "");
+																	free(s);}
 	   ;
 
 case_section : case							{$$ = $1;}
@@ -592,8 +585,8 @@ default : DEFAULT ':' body	{char * s = cat("default", ":", $3->code, "", "");
 				;
 
 loop : while	{$$ = $1;}
-	 | for			{$$ = $1;}
-	 ;
+		| for			{$$ = $1;}
+		;
 
 while : WHILE evaluation block	{char * s = cat("while ", $2->code, $3->code, "", "");
 																freeRecord($2);
@@ -670,22 +663,22 @@ return 	: RETURN expression	{char * s = cat("return ", $2->code, "", "", "");
 %%
 
 int main(int argc, char ** argv){
-	int codigo;
+	int code;
 
 	if (argc != 3) {
-		printf("Please provide a input file and an output destinationClosing application...\n");
+		printf("Please provide a input file and an output destination. Closing application...\n");
 		exit(0);
 	}
     
 	yyin = fopen(argv[1], "r");
 	yyout = fopen(argv[2], "w");
 
-	codigo = yyparse();
+	code = yyparse();
 
 	fclose(yyin);
 	fclose(yyout);
 
-	return codigo;
+	return code;
 }
 
 int yyerror (char *msg) {
@@ -712,7 +705,7 @@ char * cat(char * s1, char * s2, char * s3, char * s4, char * s5){
 
 char * convert(char * type){
 	if (strcmp(type, "string") == 0) {
-		char * output = "string";
+		char * output = "char *";
 		return output;
 	};
 	if (strcmp(type, "int") == 0) {
